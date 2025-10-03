@@ -8,11 +8,51 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="app-layout">
+    <!-- Tela de Login -->
+    <div id="login-screen" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>🚀 GestãoPro</h1>
+                <p>Sistema de Gestão Empresarial</p>
+            </div>
+            
+            <div class="login-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label">Usuário</label>
+                        <input type="text" id="username" class="form-control" required placeholder="Digite seu usuário">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Senha</label>
+                        <input type="password" id="password" class="form-control" required placeholder="Digite sua senha">
+                    </div>
+                    
+                    <div id="login-error" class="message error hidden">
+                        Usuário ou senha incorretos!
+                    </div>
+                    
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Entrar
+                    </button>
+                </form>
+            </div>
+            
+            <div class="login-footer">
+                <p class="login-info">Credenciais de acesso:</p>
+                <p class="login-credentials">Usuário: <strong>admin</strong></p>
+                <p class="login-credentials">Senha: <strong>123456</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema Principal -->
+    <div id="main-system" class="app-layout hidden">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>🚀 GestãoPro</h2>
+                <button class="btn btn--outline btn--sm" id="logout-btn">Sair</button>
             </div>
             <nav class="sidebar-nav">
                 <div class="nav-section">
@@ -36,10 +76,6 @@
                 </div>
                 <div class="nav-section">
                     <h4 class="nav-section-title">GESTÃO</h4>
-                    <a href="#" class="nav-item" data-section="fornecedores">
-                        <span class="nav-icon">🏢</span>
-                        Fornecedores
-                    </a>
                     <a href="#" class="nav-item" data-section="clientes">
                         <span class="nav-icon">👥</span>
                         Clientes
@@ -55,6 +91,10 @@
                     <a href="#" class="nav-item" data-section="relatorios-vendas">
                         <span class="nav-icon">📊</span>
                         Relatórios de Vendas
+                    </a>
+                    <a href="#" class="nav-item" data-section="fornecedores">
+                        <span class="nav-icon">🏢</span>
+                        Fornecedores
                     </a>
                 </div>
             </nav>
@@ -76,26 +116,26 @@
                 <div class="cards-grid">
                     <div class="card info-card financial">
                         <div class="card__body">
-                            <h3>Contas a Pagar Pendentes</h3>
-                            <p class="card-value" id="despesas-pendentes">R$ 0,00</p>
+                            <h3>Saldo Atual</h3>
+                            <p class="card-value" id="saldo-atual">R$ 0,00</p>
                         </div>
                     </div>
                     <div class="card info-card sales">
                         <div class="card__body">
-                            <h3>Maior Fornecedor</h3>
-                            <p class="card-value-text" id="maior-fornecedor">-</p>
+                            <h3>Vendas do Mês</h3>
+                            <p class="card-value" id="vendas-mes">R$ 0,00</p>
                         </div>
                     </div>
                     <div class="card info-card clients">
                         <div class="card__body">
-                            <h3>Fornecedores Ativos</h3>
-                            <p class="card-value" id="fornecedores-ativos">0</p>
+                            <h3>Clientes Ativos</h3>
+                            <p class="card-value" id="clientes-ativos">0</p>
                         </div>
                     </div>
                     <div class="card info-card products">
                         <div class="card__body">
-                            <h3>Contas Vencendo (7 dias)</h3>
-                            <p class="card-value" id="contas-vencendo">0</p>
+                            <h3>Produtos em Estoque</h3>
+                            <p class="card-value" id="produtos-estoque">0</p>
                         </div>
                     </div>
                 </div>
@@ -104,50 +144,87 @@
                 <div class="charts-container">
                     <div class="card chart-card">
                         <div class="card__body">
-                            <h3>Despesas por Categoria</h3>
+                            <h3>Receitas vs Despesas</h3>
                             <div class="chart-container" style="position: relative; height: 300px;">
-                                <canvas id="despesas-categoria-chart"></canvas>
+                                <canvas id="financeiro-chart"></canvas>
                             </div>
                         </div>
                     </div>
                     <div class="card chart-card">
                         <div class="card__body">
-                            <h3>Gastos por Fornecedor</h3>
+                            <h3>Produtos Mais Vendidos</h3>
                             <div class="chart-container" style="position: relative; height: 300px;">
-                                <canvas id="fornecedores-chart"></canvas>
+                                <canvas id="produtos-vendidos-chart"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Próximos vencimentos -->
+                <!-- Atividades recentes -->
                 <div class="card">
                     <div class="card__body">
-                        <h3>Próximos Vencimentos</h3>
-                        <div id="proximos-vencimentos"></div>
+                        <h3>Atividades Recentes</h3>
+                        <div id="atividades-recentes"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- Fornecedores Section -->
-            <section id="fornecedores" class="section">
+            <!-- Contas a Receber Section -->
+            <section id="receitas" class="section">
                 <header class="section-header">
-                    <h1>Gestão de Fornecedores</h1>
-                    <div class="header-actions">
-                        <div class="search-box">
-                            <input type="text" id="search-fornecedores" class="form-control" placeholder="Buscar fornecedor...">
-                        </div>
-                        <select id="filter-status-fornecedores" class="form-control">
-                            <option value="todos">Todos os status</option>
-                            <option value="ativo">Ativo</option>
-                            <option value="inativo">Inativo</option>
-                        </select>
-                        <button class="btn btn--primary" id="novo-fornecedor-btn">+ Novo Fornecedor</button>
-                    </div>
+                    <h1>Contas a Receber</h1>
+                    <button class="btn btn--primary" id="nova-receita-btn">+ Nova Conta a Receber</button>
                 </header>
+                
+                <div class="filters-section">
+                    <div class="filters">
+                        <input type="date" id="filter-data-inicio-receitas" class="form-control" placeholder="Data De:">
+                        <input type="date" id="filter-data-fim-receitas" class="form-control" placeholder="Data Até:">
+                        <select id="filter-status-receitas" class="form-control">
+                            <option value="todos">Todos os Status</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select id="filter-categoria-receitas" class="form-control">
+                            <option value="todas">Todas as Categorias</option>
+                        </select>
+                        <button class="btn btn--secondary" id="limpar-filtros-receitas">Limpar Filtros</button>
+                    </div>
+                </div>
+                
                 <div class="card">
                     <div class="card__body">
-                        <div class="table-container" id="fornecedores-table"></div>
+                        <div class="table-container" id="receitas-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contas a Pagar Section -->
+            <section id="despesas" class="section">
+                <header class="section-header">
+                    <h1>Contas a Pagar</h1>
+                    <button class="btn btn--primary" id="nova-despesa-btn">+ Nova Conta a Pagar</button>
+                </header>
+                
+                <div class="filters-section">
+                    <div class="filters">
+                        <input type="date" id="filter-data-inicio-despesas" class="form-control" placeholder="Data De:">
+                        <input type="date" id="filter-data-fim-despesas" class="form-control" placeholder="Data Até:">
+                        <select id="filter-status-despesas" class="form-control">
+                            <option value="todos">Todos os Status</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select id="filter-categoria-despesas" class="form-control">
+                            <option value="todas">Todas as Categorias</option>
+                        </select>
+                        <button class="btn btn--secondary" id="limpar-filtros-despesas">Limpar Filtros</button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="despesas-table"></div>
                     </div>
                 </div>
             </section>
@@ -357,57 +434,41 @@
                 </div>
             </section>
 
-            <!-- Seções do sistema financeiro -->
-            <section id="receitas" class="section">
+            <!-- Fornecedores Section -->
+            <section id="fornecedores" class="section">
                 <header class="section-header">
-                    <h1>Contas a Receber</h1>
-                    <div class="filters">
-                        <select id="filter-status-receitas" class="form-control">
-                            <option value="todos">Todos</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="pago">Pago</option>
+                    <h1>Gestão de Fornecedores</h1>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-fornecedores" class="form-control" placeholder="Buscar fornecedor...">
+                        </div>
+                        <select id="filter-status-fornecedores" class="form-control">
+                            <option value="todos">Todos os status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
                         </select>
-                        <select id="filter-categoria-receitas" class="form-control">
-                            <option value="todas">Todas as categorias</option>
-                        </select>
+                        <button class="btn btn--primary" id="novo-fornecedor-btn">+ Novo Fornecedor</button>
                     </div>
                 </header>
                 <div class="card">
                     <div class="card__body">
-                        <div class="table-container" id="receitas-table"></div>
+                        <div class="table-container" id="fornecedores-table"></div>
                     </div>
                 </div>
             </section>
 
-            <section id="despesas" class="section">
-                <header class="section-header">
-                    <h1>Contas a Pagar</h1>
-                    <div class="filters">
-                        <select id="filter-status-despesas" class="form-control">
-                            <option value="todos">Todos</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="pago">Pago</option>
-                        </select>
-                        <select id="filter-categoria-despesas" class="form-control">
-                            <option value="todas">Todas as categorias</option>
-                        </select>
-                        <select id="filter-fornecedor-despesas" class="form-control">
-                            <option value="todos">Todos os fornecedores</option>
-                        </select>
-                    </div>
-                </header>
-                <div class="card">
-                    <div class="card__body">
-                        <div class="table-container" id="despesas-table"></div>
-                    </div>
-                </div>
-            </section>
-
+            <!-- Relatórios Section -->
             <section id="relatorios" class="section">
                 <header class="section-header">
                     <h1>Relatórios Financeiros</h1>
                 </header>
                 <div class="cards-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Receitas Pagas</h3>
+                            <p class="card-value receitas" id="total-receitas-pagas">R$ 0,00</p>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card__body">
                             <h3>Despesas Pagas</h3>
@@ -416,21 +477,15 @@
                     </div>
                     <div class="card">
                         <div class="card__body">
-                            <h3>Despesas Pendentes</h3>
-                            <p class="card-value despesas" id="total-despesas-pendentes">R$ 0,00</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card__body">
-                            <h3>Maior Fornecedor</h3>
-                            <p class="card-value-text" id="maior-fornecedor-mes">-</p>
+                            <h3>Resultado</h3>
+                            <p class="card-value" id="resultado-total">R$ 0,00</p>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card__body">
-                        <h3>Gastos por Fornecedor</h3>
-                        <div id="resumo-fornecedores"></div>
+                        <h3>Resumo por Categoria</h3>
+                        <div id="resumo-categorias"></div>
                     </div>
                 </div>
             </section>
@@ -465,15 +520,15 @@
                         <label class="form-label">Categoria</label>
                         <select id="transaction-category" class="form-control" required></select>
                     </div>
-                    <div class="form-group" id="fornecedor-group" style="display: none;">
+                    <div class="form-group">
+                        <label class="form-label">Data de Vencimento</label>
+                        <input type="date" id="transaction-date" class="form-control" required>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Fornecedor</label>
                         <select id="transaction-fornecedor" class="form-control">
                             <option value="">Selecione um fornecedor...</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Data de Vencimento</label>
-                        <input type="date" id="transaction-date" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">
@@ -482,8 +537,8 @@
                         </label>
                     </div>
                     <div class="form-group" id="parcelas-group" style="display: none;">
-                        <label class="form-label">Parcelas Restantes</label>
-                        <input type="number" id="transaction-parcelas" class="form-control" min="1" placeholder="Deixe vazio para recorrente infinito">
+                        <label class="form-label">Número de parcelas</label>
+                        <input type="number" id="transaction-parcelas" class="form-control" min="2" max="48" value="1">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Status</label>
@@ -494,51 +549,6 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn--secondary" id="cancel-transaction">Cancelar</button>
-                        <button type="submit" class="btn btn--primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para fornecedor -->
-    <div id="fornecedor-modal" class="modal hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="fornecedor-modal-title">Novo Fornecedor</h3>
-                <button class="modal-close" id="close-fornecedor-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form id="fornecedor-form">
-                    <div class="form-group">
-                        <label class="form-label">Nome</label>
-                        <input type="text" id="fornecedor-nome" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">E-mail</label>
-                        <input type="email" id="fornecedor-email" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Telefone</label>
-                        <input type="text" id="fornecedor-telefone" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Endereço</label>
-                        <input type="text" id="fornecedor-endereco" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">CNPJ/CPF</label>
-                        <input type="text" id="fornecedor-documento" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Status</label>
-                        <select id="fornecedor-status" class="form-control">
-                            <option value="ativo">Ativo</option>
-                            <option value="inativo">Inativo</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn--secondary" id="cancel-fornecedor">Cancelar</button>
                         <button type="submit" class="btn btn--primary">Salvar</button>
                     </div>
                 </form>
@@ -633,6 +643,51 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn--secondary" id="cancel-produto">Cancelar</button>
+                        <button type="submit" class="btn btn--primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para fornecedor -->
+    <div id="fornecedor-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="fornecedor-modal-title">Novo Fornecedor</h3>
+                <button class="modal-close" id="close-fornecedor-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="fornecedor-form">
+                    <div class="form-group">
+                        <label class="form-label">Nome</label>
+                        <input type="text" id="fornecedor-nome" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" id="fornecedor-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telefone</label>
+                        <input type="text" id="fornecedor-telefone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Endereço</label>
+                        <input type="text" id="fornecedor-endereco" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">CNPJ/CPF</label>
+                        <input type="text" id="fornecedor-documento" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="fornecedor-status" class="form-control">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn--secondary" id="cancel-fornecedor">Cancelar</button>
                         <button type="submit" class="btn btn--primary">Salvar</button>
                     </div>
                 </form>

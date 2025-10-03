@@ -8,465 +8,433 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <!-- Tela de Login -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-container">
-            <div class="login-header">
-                <h1>🚀 GestãoPro</h1>
-                <p>Sistema de Gestão Empresarial</p>
-            </div>
-            <form id="login-form" class="login-form">
-                <div class="form-group">
-                    <label class="form-label">Usuário</label>
-                    <input type="text" id="login-usuario" class="form-control" required autofocus>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Senha</label>
-                    <input type="password" id="login-senha" class="form-control" required>
-                </div>
-                <div id="login-error" class="login-error hidden"></div>
-                <button type="submit" class="btn btn--primary btn--full-width" id="login-btn">
-                    Entrar
-                </button>
-            </form>
-            <div class="login-info">
-                <p><strong>Credenciais de acesso:</strong></p>
-                <p>Usuário: <code>admin</code></p>
-                <p>Senha: <code>123456</code></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Sistema Principal -->
-    <div id="main-system" class="app-layout hidden">
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-left">
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
                 <h2>🚀 GestãoPro</h2>
             </div>
-            <div class="header-center">
-                <div id="current-datetime" class="header-datetime"></div>
-            </div>
-            <div class="header-right">
-                <div class="user-info">
-                    <span class="user-name">👤 Usuário: <strong id="logged-user">admin</strong></span>
-                    <button class="btn btn--outline btn--sm" id="logout-btn">Sair</button>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">FINANCEIRO</h4>
+                    <a href="#" class="nav-item active" data-section="dashboard">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a href="#" class="nav-item" data-section="receitas">
+                        <span class="nav-icon">💰</span>
+                        Contas a Receber
+                    </a>
+                    <a href="#" class="nav-item" data-section="despesas">
+                        <span class="nav-icon">💸</span>
+                        Contas a Pagar
+                    </a>
+                    <a href="#" class="nav-item" data-section="relatorios">
+                        <span class="nav-icon">📈</span>
+                        Relatórios Financeiros
+                    </a>
                 </div>
-            </div>
-        </header>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">GESTÃO</h4>
+                    <a href="#" class="nav-item" data-section="fornecedores">
+                        <span class="nav-icon">🏢</span>
+                        Fornecedores
+                    </a>
+                    <a href="#" class="nav-item" data-section="clientes">
+                        <span class="nav-icon">👥</span>
+                        Clientes
+                    </a>
+                    <a href="#" class="nav-item" data-section="produtos">
+                        <span class="nav-icon">📦</span>
+                        Produtos
+                    </a>
+                    <a href="#" class="nav-item" data-section="vendas">
+                        <span class="nav-icon">🛒</span>
+                        Vendas (PDV)
+                    </a>
+                    <a href="#" class="nav-item" data-section="relatorios-vendas">
+                        <span class="nav-icon">📊</span>
+                        Relatórios de Vendas
+                    </a>
+                </div>
+            </nav>
+        </aside>
 
-        <div class="app-body">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <nav class="sidebar-nav">
-                    <div class="nav-section">
-                        <h4 class="nav-section-title">FINANCEIRO</h4>
-                        <a href="#" class="nav-item active" data-section="dashboard">
-                            <span class="nav-icon">📊</span>
-                            Dashboard
-                        </a>
-                        <a href="#" class="nav-item" data-section="receitas">
-                            <span class="nav-icon">💰</span>
-                            Contas a Receber
-                        </a>
-                        <a href="#" class="nav-item" data-section="despesas">
-                            <span class="nav-icon">💸</span>
-                            Contas a Pagar
-                        </a>
-                        <a href="#" class="nav-item" data-section="relatorios">
-                            <span class="nav-icon">📈</span>
-                            Relatórios Financeiros
-                        </a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <header class="section-header">
+                    <h1>Dashboard Geral</h1>
+                    <button class="btn btn--primary" id="nova-transacao-btn">+ Nova Transação</button>
+                </header>
+
+                <!-- Alertas -->
+                <div class="alerts-container" id="dashboard-alerts"></div>
+
+                <!-- Cards informativos -->
+                <div class="cards-grid">
+                    <div class="card info-card financial">
+                        <div class="card__body">
+                            <h3>Contas a Pagar Pendentes</h3>
+                            <p class="card-value" id="despesas-pendentes">R$ 0,00</p>
+                        </div>
                     </div>
-                    <div class="nav-section">
-                        <h4 class="nav-section-title">GESTÃO</h4>
-                        <a href="#" class="nav-item" data-section="clientes">
-                            <span class="nav-icon">👥</span>
-                            Clientes
-                        </a>
-                        <a href="#" class="nav-item" data-section="produtos">
-                            <span class="nav-icon">📦</span>
-                            Produtos
-                        </a>
-                        <a href="#" class="nav-item" data-section="vendas">
-                            <span class="nav-icon">🛒</span>
-                            Vendas (PDV)
-                        </a>
-                        <a href="#" class="nav-item" data-section="relatorios-vendas">
-                            <span class="nav-icon">📊</span>
-                            Relatórios de Vendas
-                        </a>
+                    <div class="card info-card sales">
+                        <div class="card__body">
+                            <h3>Maior Fornecedor</h3>
+                            <p class="card-value-text" id="maior-fornecedor">-</p>
+                        </div>
                     </div>
-                </nav>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="main-content">
-                <!-- Dashboard Section -->
-                <section id="dashboard" class="section active">
-                    <header class="section-header">
-                        <h1>Dashboard Geral</h1>
-                        <button class="btn btn--primary" id="nova-transacao-btn">+ Nova Transação</button>
-                    </header>
-
-                    <!-- Alertas -->
-                    <div class="alerts-container" id="dashboard-alerts"></div>
-
-                    <!-- Cards informativos -->
-                    <div class="cards-grid">
-                        <div class="card info-card financial">
-                            <div class="card__body">
-                                <h3>Saldo Atual</h3>
-                                <p class="card-value" id="saldo-atual">R$ 0,00</p>
-                            </div>
+                    <div class="card info-card clients">
+                        <div class="card__body">
+                            <h3>Fornecedores Ativos</h3>
+                            <p class="card-value" id="fornecedores-ativos">0</p>
                         </div>
-                        <div class="card info-card sales">
-                            <div class="card__body">
-                                <h3>Vendas do Mês</h3>
-                                <p class="card-value" id="vendas-mes">R$ 0,00</p>
-                            </div>
+                    </div>
+                    <div class="card info-card products">
+                        <div class="card__body">
+                            <h3>Contas Vencendo (7 dias)</h3>
+                            <p class="card-value" id="contas-vencendo">0</p>
                         </div>
-                        <div class="card info-card clients">
-                            <div class="card__body">
-                                <h3>Clientes Ativos</h3>
-                                <p class="card-value" id="clientes-ativos">0</p>
-                            </div>
-                        </div>
-                        <div class="card info-card products">
-                            <div class="card__body">
-                                <h3>Produtos em Estoque</h3>
-                                <p class="card-value" id="produtos-estoque">0</p>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-container">
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h3>Despesas por Categoria</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="despesas-categoria-chart"></canvas>
                             </div>
                         </div>
                     </div>
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h3>Gastos por Fornecedor</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="fornecedores-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <!-- Charts -->
-                    <div class="charts-container">
-                        <div class="card chart-card">
+                <!-- Próximos vencimentos -->
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Próximos Vencimentos</h3>
+                        <div id="proximos-vencimentos"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Fornecedores Section -->
+            <section id="fornecedores" class="section">
+                <header class="section-header">
+                    <h1>Gestão de Fornecedores</h1>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-fornecedores" class="form-control" placeholder="Buscar fornecedor...">
+                        </div>
+                        <select id="filter-status-fornecedores" class="form-control">
+                            <option value="todos">Todos os status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                        <button class="btn btn--primary" id="novo-fornecedor-btn">+ Novo Fornecedor</button>
+                    </div>
+                </header>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="fornecedores-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Clientes Section -->
+            <section id="clientes" class="section">
+                <header class="section-header">
+                    <h1>Gestão de Clientes</h1>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-clientes" class="form-control" placeholder="Buscar cliente...">
+                        </div>
+                        <select id="filter-status-clientes" class="form-control">
+                            <option value="todos">Todos os status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                        <button class="btn btn--primary" id="novo-cliente-btn">+ Novo Cliente</button>
+                    </div>
+                </header>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="clientes-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Produtos Section -->
+            <section id="produtos" class="section">
+                <header class="section-header">
+                    <h1>Gestão de Produtos</h1>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-produtos" class="form-control" placeholder="Buscar produto...">
+                        </div>
+                        <select id="filter-categoria-produtos" class="form-control">
+                            <option value="todas">Todas as categorias</option>
+                        </select>
+                        <select id="filter-status-produtos" class="form-control">
+                            <option value="todos">Todos os status</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                        <button class="btn btn--primary" id="novo-produto-btn">+ Novo Produto</button>
+                    </div>
+                </header>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="produtos-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vendas (PDV) Section -->
+            <section id="vendas" class="section">
+                <header class="section-header">
+                    <h1>Ponto de Venda (PDV)</h1>
+                    <div class="header-actions">
+                        <button class="btn btn--secondary" id="historico-vendas-btn">📋 Histórico de Vendas</button>
+                    </div>
+                </header>
+                
+                <div class="pdv-container">
+                    <div class="pdv-left">
+                        <!-- Seleção do Cliente -->
+                        <div class="card">
                             <div class="card__body">
-                                <h3>Receitas vs Despesas</h3>
-                                <div class="chart-container" style="position: relative; height: 300px;">
-                                    <canvas id="financeiro-chart"></canvas>
+                                <h3>Cliente</h3>
+                                <select id="pdv-cliente" class="form-control">
+                                    <option value="">Selecione um cliente...</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Busca de Produtos -->
+                        <div class="card">
+                            <div class="card__body">
+                                <h3>Adicionar Produtos</h3>
+                                <div class="product-search">
+                                    <input type="text" id="pdv-search-produto" class="form-control" placeholder="Buscar produto por nome...">
+                                    <div id="pdv-produtos-list" class="produtos-list"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card chart-card">
+                    </div>
+
+                    <div class="pdv-right">
+                        <!-- Carrinho -->
+                        <div class="card">
                             <div class="card__body">
-                                <h3>Produtos Mais Vendidos</h3>
-                                <div class="chart-container" style="position: relative; height: 300px;">
-                                    <canvas id="produtos-vendidos-chart"></canvas>
+                                <h3>Carrinho de Compras</h3>
+                                <div id="pdv-carrinho" class="carrinho"></div>
+                                
+                                <!-- Totais -->
+                                <div class="totals-section">
+                                    <div class="total-line">
+                                        <span>Subtotal:</span>
+                                        <span id="pdv-subtotal">R$ 0,00</span>
+                                    </div>
+                                    <div class="total-line">
+                                        <label>
+                                            Desconto (R$): 
+                                            <input type="number" id="pdv-desconto" class="form-control inline" value="0" min="0" step="0.01">
+                                        </label>
+                                    </div>
+                                    <div class="total-line final">
+                                        <span><strong>Total:</strong></span>
+                                        <span id="pdv-total"><strong>R$ 0,00</strong></span>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Atividades recentes -->
-                    <div class="card">
-                        <div class="card__body">
-                            <h3>Atividades Recentes</h3>
-                            <div id="atividades-recentes"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Clientes Section -->
-                <section id="clientes" class="section">
-                    <header class="section-header">
-                        <h1>Gestão de Clientes</h1>
-                        <div class="header-actions">
-                            <div class="search-box">
-                                <input type="text" id="search-clientes" class="form-control" placeholder="Buscar cliente...">
-                            </div>
-                            <select id="filter-status-clientes" class="form-control">
-                                <option value="todos">Todos os status</option>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                            <button class="btn btn--primary" id="novo-cliente-btn">+ Novo Cliente</button>
-                        </div>
-                    </header>
-                    <div class="card">
-                        <div class="card__body">
-                            <div class="table-container" id="clientes-table"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Produtos Section -->
-                <section id="produtos" class="section">
-                    <header class="section-header">
-                        <h1>Gestão de Produtos</h1>
-                        <div class="header-actions">
-                            <div class="search-box">
-                                <input type="text" id="search-produtos" class="form-control" placeholder="Buscar produto...">
-                            </div>
-                            <select id="filter-categoria-produtos" class="form-control">
-                                <option value="todas">Todas as categorias</option>
-                            </select>
-                            <select id="filter-status-produtos" class="form-control">
-                                <option value="todos">Todos os status</option>
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                            <button class="btn btn--primary" id="novo-produto-btn">+ Novo Produto</button>
-                        </div>
-                    </header>
-                    <div class="card">
-                        <div class="card__body">
-                            <div class="table-container" id="produtos-table"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Vendas (PDV) Section -->
-                <section id="vendas" class="section">
-                    <header class="section-header">
-                        <h1>Ponto de Venda (PDV)</h1>
-                        <div class="header-actions">
-                            <button class="btn btn--secondary" id="historico-vendas-btn">📋 Histórico de Vendas</button>
-                        </div>
-                    </header>
-                    
-                    <div class="pdv-container">
-                        <div class="pdv-left">
-                            <!-- Seleção do Cliente -->
-                            <div class="card">
-                                <div class="card__body">
-                                    <h3>Cliente</h3>
-                                    <select id="pdv-cliente" class="form-control">
-                                        <option value="">Selecione um cliente...</option>
+                                <!-- Pagamento -->
+                                <div class="payment-section">
+                                    <h4>Forma de Pagamento</h4>
+                                    <select id="pdv-pagamento" class="form-control">
+                                        <option value="dinheiro">Dinheiro</option>
+                                        <option value="cartao">Cartão</option>
+                                        <option value="pix">PIX</option>
+                                        <option value="boleto">Boleto</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <!-- Busca de Produtos -->
-                            <div class="card">
-                                <div class="card__body">
-                                    <h3>Adicionar Produtos</h3>
-                                    <div class="product-search">
-                                        <input type="text" id="pdv-search-produto" class="form-control" placeholder="Buscar produto por nome...">
-                                        <div id="pdv-produtos-list" class="produtos-list"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="pdv-right">
-                            <!-- Carrinho -->
-                            <div class="card">
-                                <div class="card__body">
-                                    <h3>Carrinho de Compras</h3>
-                                    <div id="pdv-carrinho" class="carrinho"></div>
-                                    
-                                    <!-- Totais -->
-                                    <div class="totals-section">
-                                        <div class="total-line">
-                                            <span>Subtotal:</span>
-                                            <span id="pdv-subtotal">R$ 0,00</span>
-                                        </div>
-                                        <div class="total-line">
-                                            <label>
-                                                Desconto (R$): 
-                                                <input type="number" id="pdv-desconto" class="form-control inline" value="0" min="0" step="0.01">
-                                            </label>
-                                        </div>
-                                        <div class="total-line final">
-                                            <span><strong>Total:</strong></span>
-                                            <span id="pdv-total"><strong>R$ 0,00</strong></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Pagamento -->
-                                    <div class="payment-section">
-                                        <h4>Forma de Pagamento</h4>
-                                        <select id="pdv-pagamento" class="form-control">
-                                            <option value="dinheiro">Dinheiro</option>
-                                            <option value="cartao">Cartão</option>
-                                            <option value="pix">PIX</option>
-                                            <option value="boleto">Boleto</option>
+                                    <div id="pdv-parcelas-container" class="hidden">
+                                        <label>Parcelas:</label>
+                                        <select id="pdv-parcelas" class="form-control">
+                                            <option value="1">1x</option>
+                                            <option value="2">2x</option>
+                                            <option value="3">3x</option>
+                                            <option value="6">6x</option>
+                                            <option value="12">12x</option>
                                         </select>
-                                        <div id="pdv-parcelas-container" class="hidden">
-                                            <label>Parcelas:</label>
-                                            <select id="pdv-parcelas" class="form-control">
-                                                <option value="1">1x</option>
-                                                <option value="2">2x</option>
-                                                <option value="3">3x</option>
-                                                <option value="6">6x</option>
-                                                <option value="12">12x</option>
-                                            </select>
-                                        </div>
                                     </div>
-
-                                    <button class="btn btn--primary btn--full-width" id="finalizar-venda-btn">
-                                        🛒 Finalizar Venda
-                                    </button>
                                 </div>
+
+                                <button class="btn btn--primary btn--full-width" id="finalizar-venda-btn">
+                                    🛒 Finalizar Venda
+                                </button>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-                <!-- Relatórios de Vendas Section -->
-                <section id="relatorios-vendas" class="section">
-                    <header class="section-header">
-                        <h1>Relatórios de Vendas</h1>
-                        <div class="header-actions">
-                            <input type="date" id="filtro-data-inicio" class="form-control">
-                            <input type="date" id="filtro-data-fim" class="form-control">
-                            <button class="btn btn--secondary" id="aplicar-filtro-vendas">Aplicar Filtro</button>
-                        </div>
-                    </header>
+            <!-- Relatórios de Vendas Section -->
+            <section id="relatorios-vendas" class="section">
+                <header class="section-header">
+                    <h1>Relatórios de Vendas</h1>
+                    <div class="header-actions">
+                        <input type="date" id="filtro-data-inicio" class="form-control">
+                        <input type="date" id="filtro-data-fim" class="form-control">
+                        <button class="btn btn--secondary" id="aplicar-filtro-vendas">Aplicar Filtro</button>
+                    </div>
+                </header>
 
-                    <!-- Cards de métricas -->
-                    <div class="cards-grid">
-                        <div class="card info-card">
-                            <div class="card__body">
-                                <h3>Total de Vendas</h3>
-                                <p class="card-value" id="total-vendas-periodo">R$ 0,00</p>
-                            </div>
+                <!-- Cards de métricas -->
+                <div class="cards-grid">
+                    <div class="card info-card">
+                        <div class="card__body">
+                            <h3>Total de Vendas</h3>
+                            <p class="card-value" id="total-vendas-periodo">R$ 0,00</p>
                         </div>
-                        <div class="card info-card">
-                            <div class="card__body">
-                                <h3>Número de Vendas</h3>
-                                <p class="card-value" id="numero-vendas-periodo">0</p>
-                            </div>
+                    </div>
+                    <div class="card info-card">
+                        <div class="card__body">
+                            <h3>Número de Vendas</h3>
+                            <p class="card-value" id="numero-vendas-periodo">0</p>
                         </div>
-                        <div class="card info-card">
-                            <div class="card__body">
-                                <h3>Ticket Médio</h3>
-                                <p class="card-value" id="ticket-medio-periodo">R$ 0,00</p>
-                            </div>
+                    </div>
+                    <div class="card info-card">
+                        <div class="card__body">
+                            <h3>Ticket Médio</h3>
+                            <p class="card-value" id="ticket-medio-periodo">R$ 0,00</p>
                         </div>
-                        <div class="card info-card">
-                            <div class="card__body">
-                                <h3>Melhor Cliente</h3>
-                                <p class="card-value-text" id="melhor-cliente-periodo">-</p>
+                    </div>
+                    <div class="card info-card">
+                        <div class="card__body">
+                            <h3>Melhor Cliente</h3>
+                            <p class="card-value-text" id="melhor-cliente-periodo">-</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts de vendas -->
+                <div class="charts-container">
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h3>Vendas por Mês</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="vendas-mes-chart"></canvas>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Charts de vendas -->
-                    <div class="charts-container">
-                        <div class="card chart-card">
-                            <div class="card__body">
-                                <h3>Vendas por Mês</h3>
-                                <div class="chart-container" style="position: relative; height: 300px;">
-                                    <canvas id="vendas-mes-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card chart-card">
-                            <div class="card__body">
-                                <h3>Top 5 Produtos</h3>
-                                <div class="chart-container" style="position: relative; height: 300px;">
-                                    <canvas id="top-produtos-chart"></canvas>
-                                </div>
+                    <div class="card chart-card">
+                        <div class="card__body">
+                            <h3>Top 5 Produtos</h3>
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="top-produtos-chart"></canvas>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Lista de vendas recentes -->
+                <!-- Lista de vendas recentes -->
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Vendas Recentes</h3>
+                        <div id="vendas-recentes-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Seções do sistema financeiro -->
+            <section id="receitas" class="section">
+                <header class="section-header">
+                    <h1>Contas a Receber</h1>
+                    <div class="filters">
+                        <select id="filter-status-receitas" class="form-control">
+                            <option value="todos">Todos</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select id="filter-categoria-receitas" class="form-control">
+                            <option value="todas">Todas as categorias</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="receitas-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="despesas" class="section">
+                <header class="section-header">
+                    <h1>Contas a Pagar</h1>
+                    <div class="filters">
+                        <select id="filter-status-despesas" class="form-control">
+                            <option value="todos">Todos</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select id="filter-categoria-despesas" class="form-control">
+                            <option value="todas">Todas as categorias</option>
+                        </select>
+                        <select id="filter-fornecedor-despesas" class="form-control">
+                            <option value="todos">Todos os fornecedores</option>
+                        </select>
+                    </div>
+                </header>
+                <div class="card">
+                    <div class="card__body">
+                        <div class="table-container" id="despesas-table"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="relatorios" class="section">
+                <header class="section-header">
+                    <h1>Relatórios Financeiros</h1>
+                </header>
+                <div class="cards-grid">
                     <div class="card">
                         <div class="card__body">
-                            <h3>Vendas Recentes</h3>
-                            <div id="vendas-recentes-table"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contas a Receber Section -->
-                <section id="receitas" class="section">
-                    <header class="section-header">
-                        <h1>Contas a Receber</h1>
-                        <div class="header-actions">
-                            <button class="btn btn--primary" id="nova-receita-btn">+ Nova Conta a Receber</button>
-                        </div>
-                    </header>
-                    <div class="filters-container">
-                        <div class="filters">
-                            <select id="filter-status-receitas" class="form-control">
-                                <option value="todos">Todos os status</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="pago">Pago</option>
-                            </select>
-                            <select id="filter-categoria-receitas" class="form-control">
-                                <option value="todas">Todas as categorias</option>
-                            </select>
-                            <input type="date" id="filter-data-inicio-receitas" class="form-control" placeholder="Data inicial">
-                            <input type="date" id="filter-data-fim-receitas" class="form-control" placeholder="Data final">
-                            <button class="btn btn--outline btn--sm" id="limpar-filtros-receitas">Limpar Filtros</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card__body">
-                            <div class="table-container" id="receitas-table"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contas a Pagar Section -->
-                <section id="despesas" class="section">
-                    <header class="section-header">
-                        <h1>Contas a Pagar</h1>
-                        <div class="header-actions">
-                            <button class="btn btn--primary" id="nova-despesa-btn">+ Nova Conta a Pagar</button>
-                        </div>
-                    </header>
-                    <div class="filters-container">
-                        <div class="filters">
-                            <select id="filter-status-despesas" class="form-control">
-                                <option value="todos">Todos os status</option>
-                                <option value="pendente">Pendente</option>
-                                <option value="pago">Pago</option>
-                            </select>
-                            <select id="filter-categoria-despesas" class="form-control">
-                                <option value="todas">Todas as categorias</option>
-                            </select>
-                            <input type="date" id="filter-data-inicio-despesas" class="form-control" placeholder="Data inicial">
-                            <input type="date" id="filter-data-fim-despesas" class="form-control" placeholder="Data final">
-                            <button class="btn btn--outline btn--sm" id="limpar-filtros-despesas">Limpar Filtros</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card__body">
-                            <div class="table-container" id="despesas-table"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="relatorios" class="section">
-                    <header class="section-header">
-                        <h1>Relatórios Financeiros</h1>
-                    </header>
-                    <div class="cards-grid">
-                        <div class="card">
-                            <div class="card__body">
-                                <h3>Receitas Pagas</h3>
-                                <p class="card-value receitas" id="total-receitas-pagas">R$ 0,00</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card__body">
-                                <h3>Despesas Pagas</h3>
-                                <p class="card-value despesas" id="total-despesas-pagas">R$ 0,00</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card__body">
-                                <h3>Resultado</h3>
-                                <p class="card-value" id="resultado-total">R$ 0,00</p>
-                            </div>
+                            <h3>Despesas Pagas</h3>
+                            <p class="card-value despesas" id="total-despesas-pagas">R$ 0,00</p>
                         </div>
                     </div>
                     <div class="card">
                         <div class="card__body">
-                            <h3>Resumo por Categoria</h3>
-                            <div id="resumo-categorias"></div>
+                            <h3>Despesas Pendentes</h3>
+                            <p class="card-value despesas" id="total-despesas-pendentes">R$ 0,00</p>
                         </div>
                     </div>
-                </section>
-            </main>
-        </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Maior Fornecedor</h3>
+                            <p class="card-value-text" id="maior-fornecedor-mes">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Gastos por Fornecedor</h3>
+                        <div id="resumo-fornecedores"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
     <!-- Modal para transação -->
@@ -497,6 +465,12 @@
                         <label class="form-label">Categoria</label>
                         <select id="transaction-category" class="form-control" required></select>
                     </div>
+                    <div class="form-group" id="fornecedor-group" style="display: none;">
+                        <label class="form-label">Fornecedor</label>
+                        <select id="transaction-fornecedor" class="form-control">
+                            <option value="">Selecione um fornecedor...</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Data de Vencimento</label>
                         <input type="date" id="transaction-date" class="form-control" required>
@@ -507,6 +481,10 @@
                             Transação recorrente (mensal)
                         </label>
                     </div>
+                    <div class="form-group" id="parcelas-group" style="display: none;">
+                        <label class="form-label">Parcelas Restantes</label>
+                        <input type="number" id="transaction-parcelas" class="form-control" min="1" placeholder="Deixe vazio para recorrente infinito">
+                    </div>
                     <div class="form-group">
                         <label class="form-label">Status</label>
                         <select id="transaction-status" class="form-control">
@@ -516,6 +494,51 @@
                     </div>
                     <div class="form-actions">
                         <button type="button" class="btn btn--secondary" id="cancel-transaction">Cancelar</button>
+                        <button type="submit" class="btn btn--primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para fornecedor -->
+    <div id="fornecedor-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="fornecedor-modal-title">Novo Fornecedor</h3>
+                <button class="modal-close" id="close-fornecedor-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="fornecedor-form">
+                    <div class="form-group">
+                        <label class="form-label">Nome</label>
+                        <input type="text" id="fornecedor-nome" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" id="fornecedor-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Telefone</label>
+                        <input type="text" id="fornecedor-telefone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Endereço</label>
+                        <input type="text" id="fornecedor-endereco" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">CNPJ/CPF</label>
+                        <input type="text" id="fornecedor-documento" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="fornecedor-status" class="form-control">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn--secondary" id="cancel-fornecedor">Cancelar</button>
                         <button type="submit" class="btn btn--primary">Salvar</button>
                     </div>
                 </form>

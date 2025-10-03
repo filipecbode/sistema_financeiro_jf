@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>💰 Finanças</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="menu-item active" data-section="dashboard">📊 Dashboard</a></li>
+                <li><a href="#" class="menu-item" data-section="contas-receber">💵 Contas a Receber</a></li>
+                <li><a href="#" class="menu-item" data-section="contas-pagar">💳 Contas a Pagar</a></li>
+                <li><a href="#" class="menu-item" data-section="relatorios">📈 Relatórios</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <h1 id="section-title">Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn--primary" id="add-transaction-btn">+ Nova Transação</button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="dashboard-cards">
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Saldo Atual</h3>
+                            <div class="amount" id="saldo-atual">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Receitas do Mês</h3>
+                            <div class="amount positive" id="receitas-mes">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Despesas do Mês</h3>
+                            <div class="amount negative" id="despesas-mes">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Contas Pendentes</h3>
+                            <div class="amount warning" id="contas-pendentes">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-charts">
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h3>Gastos por Categoria</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="chart-categorias"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card chart-card">
+                        <div class="card__header">
+                            <h3>Evolução Mensal</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="chart-evolucao"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Contas Vencendo em 7 Dias</h3>
+                    </div>
+                    <div class="card__body">
+                        <div id="contas-vencendo" class="transactions-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contas a Receber Section -->
+            <section id="contas-receber" class="content-section">
+                <div class="section-controls">
+                    <div class="filters">
+                        <select class="form-control" id="filter-status-receber">
+                            <option value="">Todos os Status</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select class="form-control" id="filter-categoria-receber">
+                            <option value="">Todas as Categorias</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <div id="lista-contas-receber" class="transactions-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contas a Pagar Section -->
+            <section id="contas-pagar" class="content-section">
+                <div class="section-controls">
+                    <div class="filters">
+                        <select class="form-control" id="filter-status-pagar">
+                            <option value="">Todos os Status</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                        <select class="form-control" id="filter-categoria-pagar">
+                            <option value="">Todas as Categorias</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <div id="lista-contas-pagar" class="transactions-list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Relatórios Section -->
+            <section id="relatorios" class="content-section">
+                <div class="dashboard-cards">
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Total de Receitas</h3>
+                            <div class="amount positive" id="total-receitas">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Total de Despesas</h3>
+                            <div class="amount negative" id="total-despesas">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="card dashboard-card">
+                        <div class="card__body">
+                            <h3>Economia/Prejuízo</h3>
+                            <div class="amount" id="economia-total">R$ 0,00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card__header">
+                        <h3>Resumo por Categoria</h3>
+                    </div>
+                    <div class="card__body">
+                        <div id="resumo-categorias"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal para adicionar/editar transação -->
+    <div id="transaction-modal" class="modal hidden">
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Nova Transação</h3>
+                    <button class="modal-close" id="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="transaction-form">
+                        <div class="form-group">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-control" id="transaction-tipo" required>
+                                <option value="receita">Receita</option>
+                                <option value="despesa">Despesa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Descrição</label>
+                            <input type="text" class="form-control" id="transaction-descricao" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Valor (R$)</label>
+                            <input type="number" class="form-control" id="transaction-valor" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Categoria</label>
+                            <select class="form-control" id="transaction-categoria" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Data de Vencimento</label>
+                            <input type="date" class="form-control" id="transaction-vencimento" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <input type="checkbox" id="transaction-recorrente"> Recorrente (mensal)
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" id="transaction-status">
+                                <option value="pendente">Pendente</option>
+                                <option value="pago">Pago</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn--outline" id="cancel-transaction">Cancelar</button>
+                    <button type="submit" class="btn btn--primary" id="save-transaction">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

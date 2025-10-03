@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GestãoPro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🚀 GestãoPro</h2>
+                <button class="btn btn--secondary btn--sm" id="logout-btn">Sair</button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">FINANCEIRO</h4>
+                    <a href="dashboard.html" class="nav-item active">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a href="contas-receber.html" class="nav-item">
+                        <span class="nav-icon">💰</span>
+                        Contas a Receber
+                    </a>
+                    <a href="contas-pagar.html" class="nav-item">
+                        <span class="nav-icon">💸</span>
+                        Contas a Pagar
+                    </a>
+                    <a href="relatorios-financeiros.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        Relatórios Financeiros
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">GESTÃO</h4>
+                    <a href="fornecedores.html" class="nav-item">
+                        <span class="nav-icon">🏢</span>
+                        Fornecedores
+                    </a>
+                    <a href="clientes.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        Clientes
+                    </a>
+                    <a href="produtos.html" class="nav-item">
+                        <span class="nav-icon">📦</span>
+                        Produtos
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">VENDAS</h4>
+                    <a href="vendas.html" class="nav-item">
+                        <span class="nav-icon">🛒</span>
+                        PDV - Vendas
+                    </a>
+                    <a href="relatorios-vendas.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        Relatórios de Vendas
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="section-header">
+                <h1>Dashboard Financeiro</h1>
+                <!-- SEM BOTÃO DE ADICIONAR -->
+            </header>
+
+            <!-- Cards informativos -->
+            <div class="cards-grid">
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Saldo Atual</h3>
+                        <p class="card-value" id="saldo-atual">R$ 0,00</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Receitas do Mês</h3>
+                        <p class="card-value positive" id="receitas-mes">R$ 0,00</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Despesas do Mês</h3>
+                        <p class="card-value negative" id="despesas-mes">R$ 14.329,00</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Contas Pendentes</h3>
+                        <p class="card-value warning" id="contas-pendentes">23</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficos -->
+            <div class="charts-grid">
+                <div class="card chart-card">
+                    <div class="card__body">
+                        <h3>Gastos por Categoria</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-categorias"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="card chart-card">
+                    <div class="card__body">
+                        <h3>Evolução Mensal</h3>
+                        <div class="chart-container">
+                            <canvas id="chart-evolucao"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contas vencendo -->
+            <div class="card">
+                <div class="card__body">
+                    <h3>📅 Contas Vencendo nos Próximos 7 Dias</h3>
+                    <div id="contas-vencendo" class="upcoming-bills">
+                        <!-- Preenchido pelo JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Verificar login
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        // Logout
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        });
+
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDashboard();
+            updateUpcomingBills();
+            updateCharts();
+        });
+    </script>
+</body>
+</html>

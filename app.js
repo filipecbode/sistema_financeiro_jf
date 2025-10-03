@@ -1,121 +1,36 @@
-// Dados iniciais do sistema
-let transactions = [
-    {
-        id: 1,
-        tipo: "receita",
-        descricao: "Salário",
-        valor: 5000,
-        categoria: "Salário",
-        vencimento: "2025-01-05",
-        recorrente: true,
-        status: "pago",
-        created: "2025-01-01T00:00:00.000Z"
-    },
-    {
-        id: 2,
-        tipo: "despesa", 
-        descricao: "Aluguel",
-        valor: 1500,
-        categoria: "Moradia",
-        vencimento: "2025-01-10", 
-        recorrente: true,
-        status: "pendente",
-        created: "2025-01-01T00:00:00.000Z"
-    },
-    {
-        id: 3,
-        tipo: "receita",
-        descricao: "Venda #001",
-        valor: 299.90,
-        categoria: "Vendas",
-        vencimento: "2025-01-03",
-        recorrente: false,
-        status: "pago",
-        created: "2025-01-03T10:30:00.000Z",
-        vendaId: 1
-    }
+// --- Dados do sistema (atualizados conforme instrução do usuário) ---
+const initialTransactions = [
+    { id: 1, tipo: "receita", descricao: "Salário", valor: 5000, categoria: "Salário", vencimento: "2025-01-05", recorrente: true, status: "pago", created: "2025-01-01T00:00:00.000Z" },
+    { id: 2, tipo: "despesa", descricao: "Aluguel", valor: 1500, categoria: "Moradia", vencimento: "2025-01-10", recorrente: true, status: "pendente", created: "2025-01-01T00:00:00.000Z" },
+    { id: 3, tipo: "receita", descricao: "Venda #001", valor: 299.90, categoria: "Vendas", vencimento: "2025-01-03", recorrente: false, status: "pago", created: "2025-01-03T10:30:00.000Z", vendaId: 1 },
+    { id: 4, tipo: "despesa", descricao: "Conta de Luz", valor: 250, categoria: "Moradia", vencimento: "2025-01-15", recorrente: true, status: "pendente", created: "2025-01-01T00:00:00.000Z" }
 ];
 
-let clientes = [
-    {
-        id: 1,
-        nome: "João Silva",
-        email: "joao@email.com",
-        telefone: "(11) 99999-1234",
-        endereco: "Rua das Flores, 123 - São Paulo/SP",
-        documento: "123.456.789-00",
-        status: "ativo",
-        cadastro: "2024-12-01T00:00:00.000Z",
-        totalGasto: 299.90
-    },
-    {
-        id: 2,
-        nome: "Maria Santos",
-        email: "maria@email.com", 
-        telefone: "(11) 88888-5678",
-        endereco: "Av. Principal, 456 - São Paulo/SP",
-        documento: "987.654.321-00",
-        status: "ativo",
-        cadastro: "2024-11-15T00:00:00.000Z",
-        totalGasto: 0
-    }
+const initialClients = [
+    {id: 1, nome: "João Silva", email: "joao@email.com", telefone: "(11) 99999-1234", endereco: "Rua das Flores, 123 - São Paulo/SP", documento: "123.456.789-00", status: "ativo", cadastro: "2024-12-01T00:00:00.000Z", totalGasto: 299.90 },
+    {id: 2, nome: "Maria Santos", email: "maria@email.com", telefone: "(11) 88888-5678", endereco: "Av. Principal, 456 - São Paulo/SP", documento: "987.654.321-00", status: "ativo", cadastro: "2024-11-15T00:00:00.000Z", totalGasto: 0 },
+    {id: 3, nome: "Pedro Costa", email: "pedro@email.com", telefone: "(11) 77777-9999", endereco: "Rua do Comércio, 789 - São Paulo/SP", documento: "456.789.123-00", status: "ativo", cadastro: "2024-10-20T00:00:00.000Z", totalGasto: 0 }
 ];
 
-let produtos = [
-    {
-        id: 1,
-        nome: "Smartphone Galaxy",
-        descricao: "Smartphone Android com 128GB",
-        precoCusto: 200,
-        precoVenda: 299.90,
-        categoria: "Eletrônicos",
-        estoque: 15,
-        status: "ativo",
-        cadastro: "2024-12-01T00:00:00.000Z"
-    },
-    {
-        id: 2,
-        nome: "Camiseta Básica",
-        descricao: "Camiseta 100% algodão",
-        precoCusto: 15,
-        precoVenda: 39.90,
-        categoria: "Roupas", 
-        estoque: 50,
-        status: "ativo",
-        cadastro: "2024-12-01T00:00:00.000Z"
-    },
-    {
-        id: 3,
-        nome: "Café Premium",
-        descricao: "Café torrado especial 500g",
-        precoCusto: 12,
-        precoVenda: 24.90,
-        categoria: "Alimentação",
-        estoque: 3,
-        status: "ativo", 
-        cadastro: "2024-12-01T00:00:00.000Z"
-    }
+const initialProducts = [
+    { id: 1, nome: "Smartphone Galaxy", descricao: "Smartphone Android com 128GB", precoCusto: 200, precoVenda: 299.90, categoria: "Produto", estoque: 15, status: "ativo", cadastro: "2024-12-01T00:00:00.000Z" },
+    { id: 2, nome: "Consultoria em TI", descricao: "Serviço de consultoria em tecnologia", precoCusto: 0, precoVenda: 150.00, categoria: "Serviço", estoque: 999, status: "ativo", cadastro: "2024-12-01T00:00:00.000Z" },
+    { id: 3, nome: "Café Premium", descricao: "Café torrado especial 500g", precoCusto: 12, precoVenda: 24.90, categoria: "Produto", estoque: 3, status: "ativo", cadastro: "2024-12-01T00:00:00.000Z" },
+    { id: 4, nome: "Licença de Software", descricao: "Licença anual de software", precoCusto: 50, precoVenda: 120.00, categoria: "Outros", estoque: 999, status: "ativo", cadastro: "2024-11-15T00:00:00.000Z" }
 ];
 
-let vendas = [
-    {
-        id: 1,
-        clienteId: 1,
-        items: [
-            {
-                produtoId: 1,
-                quantidade: 1,
-                precoUnitario: 299.90,
-                subtotal: 299.90
-            }
-        ],
-        subtotal: 299.90,
-        desconto: 0,
-        total: 299.90,
-        pagamento: "PIX",
-        parcelas: 1,
-        data: "2025-01-03T10:30:00.000Z",
-        status: "finalizada"
+const initialSales = [
+    { 
+        id: 1, 
+        clienteId: 1, 
+        items: [{ produtoId: 1, quantidade: 1, precoUnitario: 299.90, subtotal: 299.90 }], 
+        subtotal: 299.90, 
+        desconto: 0, 
+        total: 299.90, 
+        pagamento: "PIX", 
+        parcelas: 1, 
+        data: "2025-01-03T10:30:00.000Z", 
+        status: "finalizada" 
     }
 ];
 
@@ -124,16 +39,21 @@ const categories = {
     despesa: ["Moradia", "Alimentação", "Transporte", "Saúde", "Educação", "Lazer", "Outros"]
 };
 
-const productCategories = ["Eletrônicos", "Roupas", "Casa", "Alimentação", "Serviços", "Outros"];
+const productCategories = ["Produto", "Serviço", "Outros"];
 
-// Variáveis de controle
-let nextTransactionId = 4;
-let nextClienteId = 3;
-let nextProdutoId = 4;
+// Variáveis globais
+let sessionActive = false;
+let transactions = [...initialTransactions];
+let clientes = [...initialClients];
+let produtos = [...initialProducts];
+let vendas = [...initialSales];
+let nextTransactionId = 5;
+let nextClienteId = 4;
+let nextProdutoId = 5;
 let nextVendaId = 2;
+let carrinho = [];
 let currentEditingId = null;
 let currentEditingType = null;
-let carrinho = [];
 
 // Charts
 let financeiroChart = null;
@@ -141,26 +61,83 @@ let produtosVendidosChart = null;
 let vendasMesChart = null;
 let topProdutosChart = null;
 
-// Inicialização
+// --- UTILITÁRIOS ---
+function formatCurrency(value) {
+    return 'R$ ' + value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+}
+
+function formatDateTime(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function showMessage(text, type) {
+    const message = document.createElement('div');
+    message.className = `message ${type}`;
+    message.textContent = text;
+    const mainContent = document.querySelector('.main-content');
+    if (mainContent) {
+        mainContent.insertBefore(message, mainContent.firstChild);
+        setTimeout(() => { if (message.parentNode) message.remove(); }, 3500);
+    }
+}
+
+// --- INICIALIZAÇÃO ---
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
     setupEventListeners();
     populateSelects();
-    showSection('dashboard');
-    updateAllData();
+    
+    // Foco no campo usuário
+    const loginUsuario = document.getElementById('login-usuario');
+    if (loginUsuario) loginUsuario.focus();
+    
+    // Inicia relógio
+    updateDatetime();
+    setInterval(updateDatetime, 1000);
 });
+
+function updateDatetime() {
+    const now = new Date();
+    const output = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+    });
+    const el = document.getElementById('current-datetime');
+    if (el) el.textContent = output;
+}
 
 function initializeApp() {
     const today = new Date().toISOString().split('T')[0];
-    document.getElementById('transaction-date').value = today;
+    
+    // Definir datas padrão
+    const transactionDate = document.getElementById('transaction-date');
+    if (transactionDate) transactionDate.value = today;
     
     const startDate = new Date();
     startDate.setMonth(startDate.getMonth() - 1);
-    document.getElementById('filtro-data-inicio').value = startDate.toISOString().split('T')[0];
-    document.getElementById('filtro-data-fim').value = today;
+    
+    const filtroInicio = document.getElementById('filtro-data-inicio');
+    const filtroFim = document.getElementById('filtro-data-fim');
+    
+    if (filtroInicio) filtroInicio.value = startDate.toISOString().split('T')[0];
+    if (filtroFim) filtroFim.value = today;
 }
 
 function setupEventListeners() {
+    // Sistema de login
+    const loginForm = document.getElementById('login-form');
+    const logoutBtn = document.getElementById('logout-btn');
+    
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
     // Navegação
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', function(e) {
@@ -171,55 +148,119 @@ function setupEventListeners() {
         });
     });
 
-    // Modais - Transação
-    document.getElementById('nova-transacao-btn').addEventListener('click', openNewTransactionModal);
-    document.getElementById('close-transaction-modal').addEventListener('click', () => closeModal('transaction'));
-    document.getElementById('cancel-transaction').addEventListener('click', () => closeModal('transaction'));
+    // Botões nova transação contextuais
+    const novaTransacaoBtn = document.getElementById('nova-transacao-btn');
+    const novaReceitaBtn = document.getElementById('nova-receita-btn');
+    const novaDespesaBtn = document.getElementById('nova-despesa-btn');
     
-    // Modais - Cliente
-    document.getElementById('novo-cliente-btn').addEventListener('click', openNewClienteModal);
-    document.getElementById('close-cliente-modal').addEventListener('click', () => closeModal('cliente'));
-    document.getElementById('cancel-cliente').addEventListener('click', () => closeModal('cliente'));
+    if (novaTransacaoBtn) novaTransacaoBtn.addEventListener('click', () => openNewTransactionModal('general'));
+    if (novaReceitaBtn) novaReceitaBtn.addEventListener('click', () => openNewTransactionModal('receita'));
+    if (novaDespesaBtn) novaDespesaBtn.addEventListener('click', () => openNewTransactionModal('despesa'));
+
+    // Modais
+    const closeTransactionModal = document.getElementById('close-transaction-modal');
+    const cancelTransaction = document.getElementById('cancel-transaction');
     
-    // Modais - Produto
-    document.getElementById('novo-produto-btn').addEventListener('click', openNewProdutoModal);
-    document.getElementById('close-produto-modal').addEventListener('click', () => closeModal('produto'));
-    document.getElementById('cancel-produto').addEventListener('click', () => closeModal('produto'));
+    if (closeTransactionModal) closeTransactionModal.addEventListener('click', () => closeModal('transaction'));
+    if (cancelTransaction) cancelTransaction.addEventListener('click', () => closeModal('transaction'));
+
+    // Cliente modal
+    const novoClienteBtn = document.getElementById('novo-cliente-btn');
+    const closeClienteModal = document.getElementById('close-cliente-modal');
+    const cancelCliente = document.getElementById('cancel-cliente');
     
-    // Modal - Histórico vendas
-    document.getElementById('historico-vendas-btn').addEventListener('click', openHistoricoVendas);
-    document.getElementById('close-historico-modal').addEventListener('click', () => closeModal('historico-vendas'));
+    if (novoClienteBtn) novoClienteBtn.addEventListener('click', openNewClienteModal);
+    if (closeClienteModal) closeClienteModal.addEventListener('click', () => closeModal('cliente'));
+    if (cancelCliente) cancelCliente.addEventListener('click', () => closeModal('cliente'));
+
+    // Produto modal
+    const novoProdutoBtn = document.getElementById('novo-produto-btn');
+    const closeProdutoModal = document.getElementById('close-produto-modal');
+    const cancelProduto = document.getElementById('cancel-produto');
+    
+    if (novoProdutoBtn) novoProdutoBtn.addEventListener('click', openNewProdutoModal);
+    if (closeProdutoModal) closeProdutoModal.addEventListener('click', () => closeModal('produto'));
+    if (cancelProduto) cancelProduto.addEventListener('click', () => closeModal('produto'));
+
+    // Histórico vendas
+    const historicoVendasBtn = document.getElementById('historico-vendas-btn');
+    const closeHistoricoModal = document.getElementById('close-historico-modal');
+    
+    if (historicoVendasBtn) historicoVendasBtn.addEventListener('click', openHistoricoVendas);
+    if (closeHistoricoModal) closeHistoricoModal.addEventListener('click', () => closeModal('historico-vendas'));
 
     // Formulários
-    document.getElementById('transaction-form').addEventListener('submit', handleTransactionSubmit);
-    document.getElementById('cliente-form').addEventListener('submit', handleClienteSubmit);
-    document.getElementById('produto-form').addEventListener('submit', handleProdutoSubmit);
+    const transactionForm = document.getElementById('transaction-form');
+    const clienteForm = document.getElementById('cliente-form');
+    const produtoForm = document.getElementById('produto-form');
     
-    // Filtros e busca
-    document.getElementById('search-clientes').addEventListener('input', filterClientes);
-    document.getElementById('filter-status-clientes').addEventListener('change', filterClientes);
-    document.getElementById('search-produtos').addEventListener('input', filterProdutos);
-    document.getElementById('filter-categoria-produtos').addEventListener('change', filterProdutos);
-    document.getElementById('filter-status-produtos').addEventListener('change', filterProdutos);
+    if (transactionForm) transactionForm.addEventListener('submit', handleTransactionSubmit);
+    if (clienteForm) clienteForm.addEventListener('submit', handleClienteSubmit);
+    if (produtoForm) produtoForm.addEventListener('submit', handleProdutoSubmit);
+
+    // Filtros
+    const searchClientes = document.getElementById('search-clientes');
+    const filterStatusClientes = document.getElementById('filter-status-clientes');
     
+    if (searchClientes) searchClientes.addEventListener('input', filterClientes);
+    if (filterStatusClientes) filterStatusClientes.addEventListener('change', filterClientes);
+
+    const searchProdutos = document.getElementById('search-produtos');
+    const filterCategoriaProdutos = document.getElementById('filter-categoria-produtos');
+    const filterStatusProdutos = document.getElementById('filter-status-produtos');
+    
+    if (searchProdutos) searchProdutos.addEventListener('input', filterProdutos);
+    if (filterCategoriaProdutos) filterCategoriaProdutos.addEventListener('change', filterProdutos);
+    if (filterStatusProdutos) filterStatusProdutos.addEventListener('change', filterProdutos);
+
     // PDV
-    document.getElementById('pdv-search-produto').addEventListener('input', searchProdutosPDV);
-    document.getElementById('pdv-desconto').addEventListener('input', updateTotals);
-    document.getElementById('pdv-pagamento').addEventListener('change', toggleParcelas);
-    document.getElementById('finalizar-venda-btn').addEventListener('click', finalizarVenda);
+    const pdvSearchProduto = document.getElementById('pdv-search-produto');
+    const pdvDesconto = document.getElementById('pdv-desconto');
+    const pdvPagamento = document.getElementById('pdv-pagamento');
+    const finalizarVendaBtn = document.getElementById('finalizar-venda-btn');
     
+    if (pdvSearchProduto) pdvSearchProduto.addEventListener('input', searchProdutosPDV);
+    if (pdvDesconto) pdvDesconto.addEventListener('input', updateTotals);
+    if (pdvPagamento) pdvPagamento.addEventListener('change', toggleParcelas);
+    if (finalizarVendaBtn) finalizarVendaBtn.addEventListener('click', finalizarVenda);
+
     // Relatórios
-    document.getElementById('aplicar-filtro-vendas').addEventListener('click', updateRelatoriosVendas);
+    const aplicarFiltroVendas = document.getElementById('aplicar-filtro-vendas');
+    if (aplicarFiltroVendas) aplicarFiltroVendas.addEventListener('change', updateRelatoriosVendas);
+
+    // Filtros financeiros
+    const filterStatusReceitas = document.getElementById('filter-status-receitas');
+    const filterCategoriaReceitas = document.getElementById('filter-categoria-receitas');
+    const filterStatusDespesas = document.getElementById('filter-status-despesas');
+    const filterCategoriaDespesas = document.getElementById('filter-categoria-despesas');
     
-    // Filtros financeiro
-    document.getElementById('filter-status-receitas').addEventListener('change', () => filterTransactions('receita'));
-    document.getElementById('filter-categoria-receitas').addEventListener('change', () => filterTransactions('receita'));
-    document.getElementById('filter-status-despesas').addEventListener('change', () => filterTransactions('despesa'));
-    document.getElementById('filter-categoria-despesas').addEventListener('change', () => filterTransactions('despesa'));
+    if (filterStatusReceitas) filterStatusReceitas.addEventListener('change', () => filterTransactions('receita'));
+    if (filterCategoriaReceitas) filterCategoriaReceitas.addEventListener('change', () => filterTransactions('receita'));
+    if (filterStatusDespesas) filterStatusDespesas.addEventListener('change', () => filterTransactions('despesa'));
+    if (filterCategoriaDespesas) filterCategoriaDespesas.addEventListener('change', () => filterTransactions('despesa'));
+
+    // Filtros de data
+    const filterDataInicioReceitas = document.getElementById('filter-data-inicio-receitas');
+    const filterDataFimReceitas = document.getElementById('filter-data-fim-receitas');
+    const filterDataInicioDespesas = document.getElementById('filter-data-inicio-despesas');
+    const filterDataFimDespesas = document.getElementById('filter-data-fim-despesas');
     
-    // Change handlers
-    document.getElementById('transaction-type').addEventListener('change', updateCategoriesSelect);
+    if (filterDataInicioReceitas) filterDataInicioReceitas.addEventListener('change', () => filterTransactions('receita'));
+    if (filterDataFimReceitas) filterDataFimReceitas.addEventListener('change', () => filterTransactions('receita'));
+    if (filterDataInicioDespesas) filterDataInicioDespesas.addEventListener('change', () => filterTransactions('despesa'));
+    if (filterDataFimDespesas) filterDataFimDespesas.addEventListener('change', () => filterTransactions('despesa'));
+
+    // Limpar filtros
+    const limparFiltrosReceitas = document.getElementById('limpar-filtros-receitas');
+    const limparFiltrosDespesas = document.getElementById('limpar-filtros-despesas');
     
+    if (limparFiltrosReceitas) limparFiltrosReceitas.addEventListener('click', () => resetTransactionFilters('receita'));
+    if (limparFiltrosDespesas) limparFiltrosDespesas.addEventListener('click', () => resetTransactionFilters('despesa'));
+
+    // Outros
+    const transactionType = document.getElementById('transaction-type');
+    if (transactionType) transactionType.addEventListener('change', updateCategoriesSelect);
+
     // Modal clicks
     document.querySelectorAll('.modal').forEach(modal => {
         modal.addEventListener('click', function(e) {
@@ -231,72 +272,79 @@ function setupEventListeners() {
     });
 }
 
-function populateSelects() {
-    // Categorias financeiras
-    const receitasSelect = document.getElementById('filter-categoria-receitas');
-    receitasSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
-    categories.receita.forEach(cat => {
-        receitasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
-
-    const despesasSelect = document.getElementById('filter-categoria-despesas');
-    despesasSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
-    categories.despesa.forEach(cat => {
-        despesasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
+// --- AUTENTICAÇÃO ---
+function handleLogin(e) {
+    e.preventDefault();
     
-    // Categorias de produtos
-    const produtoCategoriaSelect = document.getElementById('filter-categoria-produtos');
-    produtoCategoriaSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
-    productCategories.forEach(cat => {
-        produtoCategoriaSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
+    const usuarioInput = document.getElementById('login-usuario');
+    const senhaInput = document.getElementById('login-senha');
+    const erro = document.getElementById('login-error');
+    const loginBtn = document.getElementById('login-btn');
     
-    const produtoModalCategoriaSelect = document.getElementById('produto-categoria');
-    produtoModalCategoriaSelect.innerHTML = '';
-    productCategories.forEach(cat => {
-        produtoModalCategoriaSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
-    
-    // Inicializar clientes para PDV
-    updateClientesSelect();
-}
-
-function updateClientesSelect() {
-    const clientesSelect = document.getElementById('pdv-cliente');
-    if (!clientesSelect) return;
-    
-    try {
-        clientesSelect.innerHTML = '<option value="">Selecione um cliente...</option>';
-        
-        const clientesAtivos = clientes.filter(c => c.status === 'ativo');
-        
-        if (clientesAtivos.length === 0) {
-            clientesSelect.innerHTML += '<option value="" disabled>Nenhum cliente ativo encontrado</option>';
-            return;
-        }
-        
-        clientesAtivos.forEach(cliente => {
-            clientesSelect.innerHTML += `<option value="${cliente.id}">${cliente.nome}</option>`;
-        });
-        
-        console.log(`Clientes carregados: ${clientesAtivos.length}`);
-    } catch (error) {
-        console.error('Erro ao atualizar select de clientes:', error);
-        if (clientesSelect) {
-            clientesSelect.innerHTML = '<option value="">Erro ao carregar clientes</option>';
-        }
+    if (!usuarioInput || !senhaInput || !erro || !loginBtn) {
+        console.error('Elementos do login não encontrados');
+        return;
     }
+    
+    const usuario = usuarioInput.value.trim();
+    const senha = senhaInput.value;
+    
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Entrando...';
+    erro.classList.add('hidden');
+    erro.textContent = '';
+
+    setTimeout(() => {
+        if (usuario === 'admin' && senha === '123456') {
+            sessionActive = true;
+            const loginScreen = document.getElementById('login-screen');
+            const mainSystem = document.getElementById('main-system');
+            const loggedUser = document.getElementById('logged-user');
+            
+            if (loginScreen) loginScreen.classList.add('hidden');
+            if (mainSystem) mainSystem.classList.remove('hidden');
+            if (loggedUser) loggedUser.textContent = usuario;
+            
+            showSection('dashboard');
+            updateAllData();
+        } else {
+            sessionActive = false;
+            erro.textContent = 'Usuário ou senha inválidos!';
+            erro.classList.remove('hidden');
+        }
+        
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Entrar';
+    }, 500);
 }
 
+function handleLogout() {
+    sessionActive = false;
+    
+    const loginScreen = document.getElementById('login-screen');
+    const mainSystem = document.getElementById('main-system');
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const loginUsuario = document.getElementById('login-usuario');
+    
+    if (mainSystem) mainSystem.classList.add('hidden');
+    if (loginScreen) loginScreen.classList.remove('hidden');
+    if (loginForm) loginForm.reset();
+    if (loginError) loginError.classList.add('hidden');
+    if (loginUsuario) loginUsuario.focus();
+}
+
+// --- NAVEGAÇÃO ---
 function showSection(sectionName) {
     document.querySelectorAll('.section').forEach(section => {
         section.classList.remove('active');
     });
 
-    document.getElementById(sectionName).classList.add('active');
+    const targetSection = document.getElementById(sectionName);
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
 
-    // Usar setTimeout para garantir que o DOM esteja pronto
     setTimeout(() => {
         switch(sectionName) {
             case 'dashboard':
@@ -329,21 +377,6 @@ function showSection(sectionName) {
     }, 100);
 }
 
-function initializePDV() {
-    // Inicializar PDV com dados atualizados
-    updateClientesSelect();
-    searchProdutosPDV();
-    renderCarrinho();
-    updateTotals();
-    toggleParcelas();
-    
-    // Limpar busca de produtos se necessário
-    const searchInput = document.getElementById('pdv-search-produto');
-    if (searchInput && searchInput.value === '') {
-        document.getElementById('pdv-produtos-list').innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">Digite para buscar produtos...</div>';
-    }
-}
-
 function updateActiveNav(activeItem) {
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.remove('active');
@@ -351,21 +384,315 @@ function updateActiveNav(activeItem) {
     activeItem.classList.add('active');
 }
 
-// DASHBOARD
+// --- SELECTS ---
+function populateSelects() {
+    // Categorias receitas
+    const receitasSelect = document.getElementById('filter-categoria-receitas');
+    if (receitasSelect) {
+        receitasSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
+        categories.receita.forEach(cat => {
+            receitasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+
+    // Categorias despesas
+    const despesasSelect = document.getElementById('filter-categoria-despesas');
+    if (despesasSelect) {
+        despesasSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
+        categories.despesa.forEach(cat => {
+            despesasSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+
+    // Categorias produtos
+    const produtoCategoriaSelect = document.getElementById('filter-categoria-produtos');
+    if (produtoCategoriaSelect) {
+        produtoCategoriaSelect.innerHTML = '<option value="todas">Todas as categorias</option>';
+        productCategories.forEach(cat => {
+            produtoCategoriaSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+
+    const produtoModalCategoriaSelect = document.getElementById('produto-categoria');
+    if (produtoModalCategoriaSelect) {
+        produtoModalCategoriaSelect.innerHTML = '';
+        productCategories.forEach(cat => {
+            produtoModalCategoriaSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+
+    updateClientesSelect();
+}
+
+function updateClientesSelect() {
+    const clientesSelect = document.getElementById('pdv-cliente');
+    if (!clientesSelect) return;
+    
+    clientesSelect.innerHTML = '<option value="">Selecione um cliente...</option>';
+    clientes.filter(c => c.status === 'ativo').forEach(cliente => {
+        clientesSelect.innerHTML += `<option value="${cliente.id}">${cliente.nome}</option>`;
+    });
+}
+
+// --- TRANSAÇÕES ---
+function openNewTransactionModal(contextOrigin) {
+    currentEditingType = 'transaction';
+    currentEditingId = null;
+    
+    let tipo = 'receita';
+    let titulo = 'Nova Transação';
+    
+    if (contextOrigin === 'receita') {
+        tipo = 'receita';
+        titulo = 'Nova Conta a Receber';
+    } else if (contextOrigin === 'despesa') {
+        tipo = 'despesa';
+        titulo = 'Nova Conta a Pagar';
+    }
+    
+    const modalTitle = document.getElementById('transaction-modal-title');
+    const transactionForm = document.getElementById('transaction-form');
+    const transactionType = document.getElementById('transaction-type');
+    const transactionDate = document.getElementById('transaction-date');
+    const modal = document.getElementById('transaction-modal');
+    
+    if (modalTitle) modalTitle.textContent = titulo;
+    if (transactionForm) transactionForm.reset();
+    if (transactionType) transactionType.value = tipo;
+    if (transactionDate) transactionDate.value = new Date().toISOString().split('T')[0];
+    
+    updateCategoriesSelect();
+    
+    if (modal) modal.classList.remove('hidden');
+}
+
+function updateCategoriesSelect() {
+    const transactionType = document.getElementById('transaction-type');
+    const categorySelect = document.getElementById('transaction-category');
+    
+    if (!transactionType || !categorySelect) return;
+    
+    const tipo = transactionType.value;
+    categorySelect.innerHTML = '';
+    
+    if (categories[tipo]) {
+        categories[tipo].forEach(cat => {
+            categorySelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        });
+    }
+}
+
+function handleTransactionSubmit(e) {
+    e.preventDefault();
+    
+    const formData = {
+        tipo: document.getElementById('transaction-type').value,
+        descricao: document.getElementById('transaction-description').value,
+        valor: parseFloat(document.getElementById('transaction-value').value),
+        categoria: document.getElementById('transaction-category').value,
+        vencimento: document.getElementById('transaction-date').value,
+        recorrente: document.getElementById('transaction-recurring').checked,
+        status: document.getElementById('transaction-status').value
+    };
+    
+    if (!formData.descricao || formData.valor <= 0 || !formData.categoria || !formData.vencimento) {
+        showMessage('Preencha todos os campos obrigatórios corretamente.', 'error');
+        return;
+    }
+    
+    if (currentEditingId) {
+        const transaction = transactions.find(t => t.id === currentEditingId);
+        if (transaction) {
+            Object.assign(transaction, formData);
+            showMessage('Transação atualizada com sucesso!', 'success');
+        }
+    } else {
+        const newTransaction = {
+            id: nextTransactionId++,
+            ...formData,
+            created: new Date().toISOString()
+        };
+        transactions.push(newTransaction);
+        showMessage('Transação criada com sucesso!', 'success');
+    }
+    
+    closeModal('transaction');
+    updateAllData();
+}
+
+function resetTransactionFilters(tipo) {
+    if (tipo === 'receita') {
+        const filterStatus = document.getElementById('filter-status-receitas');
+        const filterCategoria = document.getElementById('filter-categoria-receitas');
+        const filterDataInicio = document.getElementById('filter-data-inicio-receitas');
+        const filterDataFim = document.getElementById('filter-data-fim-receitas');
+        
+        if (filterStatus) filterStatus.value = 'todos';
+        if (filterCategoria) filterCategoria.value = 'todas';
+        if (filterDataInicio) filterDataInicio.value = '';
+        if (filterDataFim) filterDataFim.value = '';
+    } else {
+        const filterStatus = document.getElementById('filter-status-despesas');
+        const filterCategoria = document.getElementById('filter-categoria-despesas');
+        const filterDataInicio = document.getElementById('filter-data-inicio-despesas');
+        const filterDataFim = document.getElementById('filter-data-fim-despesas');
+        
+        if (filterStatus) filterStatus.value = 'todos';
+        if (filterCategoria) filterCategoria.value = 'todas';
+        if (filterDataInicio) filterDataInicio.value = '';
+        if (filterDataFim) filterDataFim.value = '';
+    }
+    renderTransactionsTable(tipo);
+}
+
+function filterTransactions(tipo) {
+    renderTransactionsTable(tipo);
+}
+
+function getFilteredTransactions(tipo) {
+    const isReceita = tipo === 'receita';
+    const statusFilter = document.getElementById(isReceita ? 'filter-status-receitas' : 'filter-status-despesas');
+    const categoryFilter = document.getElementById(isReceita ? 'filter-categoria-receitas' : 'filter-categoria-despesas');
+    const dtInicio = document.getElementById(isReceita ? 'filter-data-inicio-receitas' : 'filter-data-inicio-despesas');
+    const dtFim = document.getElementById(isReceita ? 'filter-data-fim-receitas' : 'filter-data-fim-despesas');
+    
+    const statusValue = statusFilter ? statusFilter.value : 'todos';
+    const categoryValue = categoryFilter ? categoryFilter.value : 'todas';
+    const dtInicioValue = dtInicio ? dtInicio.value : '';
+    const dtFimValue = dtFim ? dtFim.value : '';
+    
+    return transactions.filter(t => {
+        const matchesTipo = t.tipo === tipo;
+        const matchesStatus = statusValue === 'todos' || t.status === statusValue;
+        const matchesCategory = categoryValue === 'todas' || t.categoria === categoryValue;
+        
+        let matchesDate = true;
+        if (dtInicioValue) matchesDate = matchesDate && (t.vencimento >= dtInicioValue);
+        if (dtFimValue) matchesDate = matchesDate && (t.vencimento <= dtFimValue);
+        
+        return matchesTipo && matchesStatus && matchesCategory && matchesDate;
+    });
+}
+
+function renderTransactionsTable(tipo) {
+    const tableId = tipo === 'receita' ? 'receitas-table' : 'despesas-table';
+    const filteredTransactions = getFilteredTransactions(tipo);
+    const container = document.getElementById(tableId);
+    
+    if (!container) return;
+    
+    if (filteredTransactions.length === 0) {
+        container.innerHTML = '<div class="empty-state"><h3>Nenhuma transação encontrada</h3></div>';
+        return;
+    }
+    
+    container.innerHTML = `
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Valor</th>
+                    <th>Vencimento</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${filteredTransactions.map(t => `
+                <tr>
+                    <td>${t.descricao}</td>
+                    <td>${t.categoria}</td>
+                    <td>${formatCurrency(t.valor)}</td>
+                    <td>${formatDate(t.vencimento)}</td>
+                    <td><span class="status-badge ${t.status}">${t.status}</span></td>
+                    <td>
+                        <div class="transaction-actions">
+                            <button class="action-btn edit" onclick="editTransaction(${t.id})" title="Editar">✏️</button>
+                            <button class="action-btn delete" onclick="deleteTransaction(${t.id})" title="Excluir">🗑️</button>
+                            ${t.status === 'pendente' ? 
+                                `<button class="action-btn pay" onclick="markAsPaid(${t.id})" title="Marcar como pago">✅</button>` : 
+                                `<button class="action-btn" onclick="markAsPending(${t.id})" title="Marcar como pendente">⏳</button>`
+                            }
+                        </div>
+                    </td>
+                </tr>`).join('')}
+            </tbody>
+        </table>
+    `;
+}
+
+function editTransaction(id) {
+    const transaction = transactions.find(t => t.id === id);
+    if (!transaction) return;
+    
+    currentEditingType = 'transaction';
+    currentEditingId = id;
+    
+    const modalTitle = document.getElementById('transaction-modal-title');
+    const transactionType = document.getElementById('transaction-type');
+    const transactionDescription = document.getElementById('transaction-description');
+    const transactionValue = document.getElementById('transaction-value');
+    const transactionDate = document.getElementById('transaction-date');
+    const transactionRecurring = document.getElementById('transaction-recurring');
+    const transactionStatus = document.getElementById('transaction-status');
+    const modal = document.getElementById('transaction-modal');
+    
+    if (modalTitle) modalTitle.textContent = 'Editar Transação';
+    if (transactionType) transactionType.value = transaction.tipo;
+    if (transactionDescription) transactionDescription.value = transaction.descricao;
+    if (transactionValue) transactionValue.value = transaction.valor;
+    if (transactionDate) transactionDate.value = transaction.vencimento;
+    if (transactionRecurring) transactionRecurring.checked = transaction.recorrente;
+    if (transactionStatus) transactionStatus.value = transaction.status;
+    
+    updateCategoriesSelect();
+    
+    const transactionCategory = document.getElementById('transaction-category');
+    if (transactionCategory) transactionCategory.value = transaction.categoria;
+    
+    if (modal) modal.classList.remove('hidden');
+}
+
+function deleteTransaction(id) {
+    if (confirm('Tem certeza que deseja excluir esta transação?')) {
+        transactions = transactions.filter(t => t.id !== id);
+        updateAllData();
+        showMessage('Transação excluída com sucesso!', 'success');
+    }
+}
+
+function markAsPaid(id) {
+    const transaction = transactions.find(t => t.id === id);
+    if (transaction) {
+        transaction.status = 'pago';
+        updateAllData();
+        showMessage('Transação marcada como paga!', 'success');
+    }
+}
+
+function markAsPending(id) {
+    const transaction = transactions.find(t => t.id === id);
+    if (transaction) {
+        transaction.status = 'pendente';
+        updateAllData();
+        showMessage('Transação marcada como pendente!', 'success');
+    }
+}
+
+// --- DASHBOARD ---
 function updateDashboard() {
     updateDashboardCards();
     updateDashboardAlerts();
 }
 
 function updateDashboardCards() {
-    // Saldo financeiro
     const receitasPagas = transactions.filter(t => t.tipo === 'receita' && t.status === 'pago');
     const despesasPagas = transactions.filter(t => t.tipo === 'despesa' && t.status === 'pago');
     const totalReceitas = receitasPagas.reduce((sum, t) => sum + t.valor, 0);
     const totalDespesas = despesasPagas.reduce((sum, t) => sum + t.valor, 0);
     const saldoAtual = totalReceitas - totalDespesas;
-    
-    // Vendas do mês
+
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
     const vendasDoMes = vendas
@@ -374,28 +701,30 @@ function updateDashboardCards() {
             return date.getMonth() === currentMonth && date.getFullYear() === currentYear;
         })
         .reduce((sum, v) => sum + v.total, 0);
-    
-    // Clientes ativos
+
     const clientesAtivos = clientes.filter(c => c.status === 'ativo').length;
-    
-    // Produtos em estoque
     const produtosEstoque = produtos.filter(p => p.status === 'ativo' && p.estoque > 0).length;
-    
-    document.getElementById('saldo-atual').textContent = formatCurrency(saldoAtual);
-    document.getElementById('vendas-mes').textContent = formatCurrency(vendasDoMes);
-    document.getElementById('clientes-ativos').textContent = clientesAtivos;
-    document.getElementById('produtos-estoque').textContent = produtosEstoque;
-    
-    // Cores dos valores
-    const saldoElement = document.getElementById('saldo-atual');
-    saldoElement.className = saldoAtual >= 0 ? 'card-value receitas' : 'card-value despesas';
+
+    const saldoAtualEl = document.getElementById('saldo-atual');
+    const vendasMesEl = document.getElementById('vendas-mes');
+    const clientesAtivosEl = document.getElementById('clientes-ativos');
+    const produtosEstoqueEl = document.getElementById('produtos-estoque');
+
+    if (saldoAtualEl) {
+        saldoAtualEl.textContent = formatCurrency(saldoAtual);
+        saldoAtualEl.className = saldoAtual >= 0 ? 'card-value receitas' : 'card-value despesas';
+    }
+    if (vendasMesEl) vendasMesEl.textContent = formatCurrency(vendasDoMes);
+    if (clientesAtivosEl) clientesAtivosEl.textContent = clientesAtivos;
+    if (produtosEstoqueEl) produtosEstoqueEl.textContent = produtosEstoque;
 }
 
 function updateDashboardAlerts() {
     const alertsContainer = document.getElementById('dashboard-alerts');
-    const alerts = [];
+    if (!alertsContainer) return;
     
-    // Produtos com estoque baixo
+    const alerts = [];
+
     const produtosEstoqueBaixo = produtos.filter(p => p.status === 'ativo' && p.estoque < 5);
     if (produtosEstoqueBaixo.length > 0) {
         alerts.push({
@@ -403,22 +732,21 @@ function updateDashboardAlerts() {
             message: `⚠️ ${produtosEstoqueBaixo.length} produto(s) com estoque baixo`
         });
     }
-    
-    // Contas vencendo
+
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     const contasVencendo = transactions.filter(t => {
         const vencimento = new Date(t.vencimento);
         return t.status === 'pendente' && vencimento <= nextWeek;
     });
-    
+
     if (contasVencendo.length > 0) {
         alerts.push({
             type: 'info',
             message: `📅 ${contasVencendo.length} conta(s) vencendo nos próximos 7 dias`
         });
     }
-    
+
     alertsContainer.innerHTML = alerts.map(alert => `
         <div class="alert ${alert.type}">
             ${alert.message}
@@ -439,7 +767,6 @@ function renderFinanceiroChart() {
         financeiroChart.destroy();
     }
 
-    // Últimos 6 meses
     const currentDate = new Date();
     const months = [];
     const receitas = [];
@@ -519,7 +846,6 @@ function renderProdutosVendidosChart() {
         produtosVendidosChart.destroy();
     }
 
-    // Calcular produtos mais vendidos
     const produtoVendas = {};
     vendas.forEach(venda => {
         venda.items.forEach(item => {
@@ -583,11 +909,10 @@ function renderProdutosVendidosChart() {
 
 function renderAtividadesRecentes() {
     const container = document.getElementById('atividades-recentes');
+    if (!container) return;
     
-    // Combinar atividades recentes (vendas e transações)
     const atividades = [];
-    
-    // Vendas recentes
+
     vendas.slice(-5).forEach(venda => {
         const cliente = clientes.find(c => c.id === venda.clienteId);
         atividades.push({
@@ -597,8 +922,7 @@ function renderAtividadesRecentes() {
             data: venda.data
         });
     });
-    
-    // Transações recentes
+
     transactions.slice(-3).forEach(trans => {
         atividades.push({
             tipo: trans.tipo,
@@ -607,10 +931,9 @@ function renderAtividadesRecentes() {
             data: trans.created
         });
     });
-    
-    // Ordenar por data (mais recente primeiro)
+
     atividades.sort((a, b) => new Date(b.data) - new Date(a.data));
-    
+
     if (atividades.length === 0) {
         container.innerHTML = '<div class="empty-state"><h3>Nenhuma atividade recente</h3></div>';
         return;
@@ -629,9 +952,11 @@ function renderAtividadesRecentes() {
     `).join('');
 }
 
-// CLIENTES
+// --- CLIENTES ---
 function renderClientesTable() {
     const container = document.getElementById('clientes-table');
+    if (!container) return;
+    
     const filteredClientes = getFilteredClientes();
 
     if (filteredClientes.length === 0) {
@@ -676,14 +1001,17 @@ function renderClientesTable() {
 }
 
 function getFilteredClientes() {
-    const searchTerm = document.getElementById('search-clientes').value.toLowerCase();
-    const statusFilter = document.getElementById('filter-status-clientes').value;
+    const searchInput = document.getElementById('search-clientes');
+    const statusFilter = document.getElementById('filter-status-clientes');
+    
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const statusValue = statusFilter ? statusFilter.value : 'todos';
 
     return clientes.filter(cliente => {
         const matchesSearch = cliente.nome.toLowerCase().includes(searchTerm) ||
                             cliente.email.toLowerCase().includes(searchTerm) ||
                             cliente.telefone.includes(searchTerm);
-        const matchesStatus = statusFilter === 'todos' || cliente.status === statusFilter;
+        const matchesStatus = statusValue === 'todos' || cliente.status === statusValue;
         
         return matchesSearch && matchesStatus;
     });
@@ -696,9 +1024,14 @@ function filterClientes() {
 function openNewClienteModal() {
     currentEditingType = 'cliente';
     currentEditingId = null;
-    document.getElementById('cliente-modal-title').textContent = 'Novo Cliente';
-    document.getElementById('cliente-form').reset();
-    document.getElementById('cliente-modal').classList.remove('hidden');
+    
+    const modalTitle = document.getElementById('cliente-modal-title');
+    const clienteForm = document.getElementById('cliente-form');
+    const modal = document.getElementById('cliente-modal');
+    
+    if (modalTitle) modalTitle.textContent = 'Novo Cliente';
+    if (clienteForm) clienteForm.reset();
+    if (modal) modal.classList.remove('hidden');
 }
 
 function editCliente(id) {
@@ -707,16 +1040,24 @@ function editCliente(id) {
 
     currentEditingType = 'cliente';
     currentEditingId = id;
-    document.getElementById('cliente-modal-title').textContent = 'Editar Cliente';
     
-    document.getElementById('cliente-nome').value = cliente.nome;
-    document.getElementById('cliente-email').value = cliente.email;
-    document.getElementById('cliente-telefone').value = cliente.telefone;
-    document.getElementById('cliente-endereco').value = cliente.endereco;
-    document.getElementById('cliente-documento').value = cliente.documento;
-    document.getElementById('cliente-status').value = cliente.status;
+    const modalTitle = document.getElementById('cliente-modal-title');
+    const clienteNome = document.getElementById('cliente-nome');
+    const clienteEmail = document.getElementById('cliente-email');
+    const clienteTelefone = document.getElementById('cliente-telefone');
+    const clienteEndereco = document.getElementById('cliente-endereco');
+    const clienteDocumento = document.getElementById('cliente-documento');
+    const clienteStatus = document.getElementById('cliente-status');
+    const modal = document.getElementById('cliente-modal');
     
-    document.getElementById('cliente-modal').classList.remove('hidden');
+    if (modalTitle) modalTitle.textContent = 'Editar Cliente';
+    if (clienteNome) clienteNome.value = cliente.nome;
+    if (clienteEmail) clienteEmail.value = cliente.email;
+    if (clienteTelefone) clienteTelefone.value = cliente.telefone;
+    if (clienteEndereco) clienteEndereco.value = cliente.endereco;
+    if (clienteDocumento) clienteDocumento.value = cliente.documento;
+    if (clienteStatus) clienteStatus.value = cliente.status;
+    if (modal) modal.classList.remove('hidden');
 }
 
 function deleteCliente(id) {
@@ -751,8 +1092,10 @@ function handleClienteSubmit(e) {
 
     if (currentEditingId) {
         const cliente = clientes.find(c => c.id === currentEditingId);
-        Object.assign(cliente, formData);
-        showMessage('Cliente atualizado com sucesso!', 'success');
+        if (cliente) {
+            Object.assign(cliente, formData);
+            showMessage('Cliente atualizado com sucesso!', 'success');
+        }
     } else {
         const newCliente = {
             id: nextClienteId++,
@@ -769,9 +1112,11 @@ function handleClienteSubmit(e) {
     updateClientesSelect();
 }
 
-// PRODUTOS
+// --- PRODUTOS ---
 function renderProdutosTable() {
     const container = document.getElementById('produtos-table');
+    if (!container) return;
+    
     const filteredProdutos = getFilteredProdutos();
 
     if (filteredProdutos.length === 0) {
@@ -794,7 +1139,7 @@ function renderProdutosTable() {
             </thead>
             <tbody>
                 ${filteredProdutos.map(produto => {
-                    const margem = ((produto.precoVenda - produto.precoCusto) / produto.precoCusto * 100);
+                    const margem = produto.precoCusto > 0 ? ((produto.precoVenda - produto.precoCusto) / produto.precoCusto * 100) : 100;
                     const estoqueClass = produto.estoque < 5 ? 'estoque-baixo' : 'estoque-ok';
                     return `
                         <tr>
@@ -825,14 +1170,18 @@ function renderProdutosTable() {
 }
 
 function getFilteredProdutos() {
-    const searchTerm = document.getElementById('search-produtos').value.toLowerCase();
-    const categoryFilter = document.getElementById('filter-categoria-produtos').value;
-    const statusFilter = document.getElementById('filter-status-produtos').value;
+    const searchInput = document.getElementById('search-produtos');
+    const categoryFilter = document.getElementById('filter-categoria-produtos');
+    const statusFilter = document.getElementById('filter-status-produtos');
+    
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const categoryValue = categoryFilter ? categoryFilter.value : 'todas';
+    const statusValue = statusFilter ? statusFilter.value : 'todos';
 
     return produtos.filter(produto => {
         const matchesSearch = produto.nome.toLowerCase().includes(searchTerm);
-        const matchesCategory = categoryFilter === 'todas' || produto.categoria === categoryFilter;
-        const matchesStatus = statusFilter === 'todos' || produto.status === statusFilter;
+        const matchesCategory = categoryValue === 'todas' || produto.categoria === categoryValue;
+        const matchesStatus = statusValue === 'todos' || produto.status === statusValue;
         
         return matchesSearch && matchesCategory && matchesStatus;
     });
@@ -845,9 +1194,14 @@ function filterProdutos() {
 function openNewProdutoModal() {
     currentEditingType = 'produto';
     currentEditingId = null;
-    document.getElementById('produto-modal-title').textContent = 'Novo Produto';
-    document.getElementById('produto-form').reset();
-    document.getElementById('produto-modal').classList.remove('hidden');
+    
+    const modalTitle = document.getElementById('produto-modal-title');
+    const produtoForm = document.getElementById('produto-form');
+    const modal = document.getElementById('produto-modal');
+    
+    if (modalTitle) modalTitle.textContent = 'Novo Produto';
+    if (produtoForm) produtoForm.reset();
+    if (modal) modal.classList.remove('hidden');
 }
 
 function editProduto(id) {
@@ -856,17 +1210,26 @@ function editProduto(id) {
 
     currentEditingType = 'produto';
     currentEditingId = id;
-    document.getElementById('produto-modal-title').textContent = 'Editar Produto';
     
-    document.getElementById('produto-nome').value = produto.nome;
-    document.getElementById('produto-descricao').value = produto.descricao;
-    document.getElementById('produto-preco-custo').value = produto.precoCusto;
-    document.getElementById('produto-preco-venda').value = produto.precoVenda;
-    document.getElementById('produto-categoria').value = produto.categoria;
-    document.getElementById('produto-estoque').value = produto.estoque;
-    document.getElementById('produto-status').value = produto.status;
+    const modalTitle = document.getElementById('produto-modal-title');
+    const produtoNome = document.getElementById('produto-nome');
+    const produtoDescricao = document.getElementById('produto-descricao');
+    const produtoPrecoCusto = document.getElementById('produto-preco-custo');
+    const produtoPrecoVenda = document.getElementById('produto-preco-venda');
+    const produtoCategoria = document.getElementById('produto-categoria');
+    const produtoEstoque = document.getElementById('produto-estoque');
+    const produtoStatus = document.getElementById('produto-status');
+    const modal = document.getElementById('produto-modal');
     
-    document.getElementById('produto-modal').classList.remove('hidden');
+    if (modalTitle) modalTitle.textContent = 'Editar Produto';
+    if (produtoNome) produtoNome.value = produto.nome;
+    if (produtoDescricao) produtoDescricao.value = produto.descricao;
+    if (produtoPrecoCusto) produtoPrecoCusto.value = produto.precoCusto;
+    if (produtoPrecoVenda) produtoPrecoVenda.value = produto.precoVenda;
+    if (produtoCategoria) produtoCategoria.value = produto.categoria;
+    if (produtoEstoque) produtoEstoque.value = produto.estoque;
+    if (produtoStatus) produtoStatus.value = produto.status;
+    if (modal) modal.classList.remove('hidden');
 }
 
 function deleteProduto(id) {
@@ -892,8 +1255,10 @@ function handleProdutoSubmit(e) {
 
     if (currentEditingId) {
         const produto = produtos.find(p => p.id === currentEditingId);
-        Object.assign(produto, formData);
-        showMessage('Produto atualizado com sucesso!', 'success');
+        if (produto) {
+            Object.assign(produto, formData);
+            showMessage('Produto atualizado com sucesso!', 'success');
+        }
     } else {
         const newProduto = {
             id: nextProdutoId++,
@@ -908,13 +1273,29 @@ function handleProdutoSubmit(e) {
     renderProdutosTable();
 }
 
-// PDV (Ponto de Venda)
+// --- PDV ---
+function initializePDV() {
+    updateClientesSelect();
+    searchProdutosPDV();
+    renderCarrinho();
+    updateTotals();
+    toggleParcelas();
+    
+    const searchInput = document.getElementById('pdv-search-produto');
+    const produtosList = document.getElementById('pdv-produtos-list');
+    
+    if (searchInput && produtosList && searchInput.value === '') {
+        produtosList.innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">Digite para buscar produtos...</div>';
+    }
+}
+
 function searchProdutosPDV() {
-    const searchTerm = document.getElementById('pdv-search-produto').value.toLowerCase();
+    const searchInput = document.getElementById('pdv-search-produto');
     const container = document.getElementById('pdv-produtos-list');
     
-    if (!container) return;
+    if (!searchInput || !container) return;
     
+    const searchTerm = searchInput.value.toLowerCase();
     const produtosAtivos = produtos.filter(p => 
         p.status === 'ativo' && 
         p.estoque > 0 && 
@@ -1051,7 +1432,8 @@ function removeFromCart(index) {
 
 function updateTotals() {
     const subtotal = carrinho.reduce((sum, item) => sum + item.subtotal, 0);
-    const desconto = parseFloat(document.getElementById('pdv-desconto').value) || 0;
+    const descontoInput = document.getElementById('pdv-desconto');
+    const desconto = descontoInput ? parseFloat(descontoInput.value) || 0 : 0;
     const total = subtotal - desconto;
     
     const subtotalEl = document.getElementById('pdv-subtotal');
@@ -1062,11 +1444,11 @@ function updateTotals() {
 }
 
 function toggleParcelas() {
-    const pagamento = document.getElementById('pdv-pagamento').value;
+    const pagamentoSelect = document.getElementById('pdv-pagamento');
     const parcelasContainer = document.getElementById('pdv-parcelas-container');
     
-    if (parcelasContainer) {
-        if (pagamento === 'cartao') {
+    if (pagamentoSelect && parcelasContainer) {
+        if (pagamentoSelect.value === 'cartao') {
             parcelasContainer.classList.remove('hidden');
         } else {
             parcelasContainer.classList.add('hidden');
@@ -1075,7 +1457,17 @@ function toggleParcelas() {
 }
 
 function finalizarVenda() {
-    const clienteId = document.getElementById('pdv-cliente').value;
+    const clienteSelect = document.getElementById('pdv-cliente');
+    const descontoInput = document.getElementById('pdv-desconto');
+    const pagamentoSelect = document.getElementById('pdv-pagamento');
+    const parcelasSelect = document.getElementById('pdv-parcelas');
+    
+    if (!clienteSelect) {
+        showMessage('Erro: Cliente select não encontrado!', 'error');
+        return;
+    }
+    
+    const clienteId = clienteSelect.value;
     
     if (!clienteId) {
         showMessage('Selecione um cliente!', 'error');
@@ -1088,17 +1480,16 @@ function finalizarVenda() {
     }
     
     const subtotal = carrinho.reduce((sum, item) => sum + item.subtotal, 0);
-    const desconto = parseFloat(document.getElementById('pdv-desconto').value) || 0;
+    const desconto = descontoInput ? parseFloat(descontoInput.value) || 0 : 0;
     const total = subtotal - desconto;
-    const pagamento = document.getElementById('pdv-pagamento').value;
-    const parcelas = document.getElementById('pdv-parcelas').value;
+    const pagamento = pagamentoSelect ? pagamentoSelect.value : 'dinheiro';
+    const parcelas = parcelasSelect ? parseInt(parcelasSelect.value) : 1;
     
     if (total <= 0) {
         showMessage('Total deve ser maior que zero!', 'error');
         return;
     }
     
-    // Criar venda
     const novaVenda = {
         id: nextVendaId++,
         clienteId: parseInt(clienteId),
@@ -1107,14 +1498,13 @@ function finalizarVenda() {
         desconto: desconto,
         total: total,
         pagamento: pagamento,
-        parcelas: parseInt(parcelas),
+        parcelas: parcelas,
         data: new Date().toISOString(),
         status: 'finalizada'
     };
     
     vendas.push(novaVenda);
     
-    // Atualizar estoque
     carrinho.forEach(item => {
         const produto = produtos.find(p => p.id === item.produtoId);
         if (produto) {
@@ -1122,13 +1512,11 @@ function finalizarVenda() {
         }
     });
     
-    // Atualizar total gasto do cliente
     const cliente = clientes.find(c => c.id === parseInt(clienteId));
     if (cliente) {
         cliente.totalGasto += total;
     }
     
-    // Criar transação financeira
     const novaTransacao = {
         id: nextTransactionId++,
         tipo: 'receita',
@@ -1144,17 +1532,21 @@ function finalizarVenda() {
     
     transactions.push(novaTransacao);
     
-    // Limpar carrinho
     carrinho = [];
     renderCarrinho();
     updateTotals();
     
-    // Reset form
-    document.getElementById('pdv-cliente').value = '';
-    document.getElementById('pdv-search-produto').value = '';
-    document.getElementById('pdv-desconto').value = '0';
-    document.getElementById('pdv-pagamento').value = 'dinheiro';
-    document.getElementById('pdv-produtos-list').innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">Digite para buscar produtos...</div>';
+    if (clienteSelect) clienteSelect.value = '';
+    const searchProduto = document.getElementById('pdv-search-produto');
+    if (searchProduto) searchProduto.value = '';
+    if (descontoInput) descontoInput.value = '0';
+    if (pagamentoSelect) pagamentoSelect.value = 'dinheiro';
+    
+    const produtosList = document.getElementById('pdv-produtos-list');
+    if (produtosList) {
+        produtosList.innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">Digite para buscar produtos...</div>';
+    }
+    
     toggleParcelas();
     
     showMessage(`Venda #${novaVenda.id.toString().padStart(3, '0')} finalizada com sucesso!`, 'success');
@@ -1164,6 +1556,9 @@ function finalizarVenda() {
 
 function openHistoricoVendas() {
     const container = document.getElementById('historico-vendas-content');
+    const modal = document.getElementById('historico-vendas-modal');
+    
+    if (!container || !modal) return;
     
     if (vendas.length === 0) {
         container.innerHTML = '<div class="empty-state"><h3>Nenhuma venda registrada</h3></div>';
@@ -1200,13 +1595,18 @@ function openHistoricoVendas() {
         container.innerHTML = tableHTML;
     }
     
-    document.getElementById('historico-vendas-modal').classList.remove('hidden');
+    modal.classList.remove('hidden');
 }
 
-// RELATÓRIOS DE VENDAS
+// --- RELATÓRIOS ---
 function updateRelatoriosVendas() {
-    const dataInicio = new Date(document.getElementById('filtro-data-inicio').value);
-    const dataFim = new Date(document.getElementById('filtro-data-fim').value);
+    const dataInicioInput = document.getElementById('filtro-data-inicio');
+    const dataFimInput = document.getElementById('filtro-data-fim');
+    
+    if (!dataInicioInput || !dataFimInput) return;
+    
+    const dataInicio = new Date(dataInicioInput.value);
+    const dataFim = new Date(dataFimInput.value);
     dataFim.setHours(23, 59, 59, 999);
     
     const vendasPeriodo = vendas.filter(v => {
@@ -1224,7 +1624,6 @@ function updateVendasPeriodoCards(vendasPeriodo) {
     const numeroVendas = vendasPeriodo.length;
     const ticketMedio = numeroVendas > 0 ? totalVendas / numeroVendas : 0;
     
-    // Melhor cliente
     const clienteVendas = {};
     vendasPeriodo.forEach(venda => {
         clienteVendas[venda.clienteId] = (clienteVendas[venda.clienteId] || 0) + venda.total;
@@ -1236,11 +1635,15 @@ function updateVendasPeriodoCards(vendasPeriodo) {
     
     const melhorCliente = clientes.find(c => c.id == melhorClienteId);
     
-    document.getElementById('total-vendas-periodo').textContent = formatCurrency(totalVendas);
-    document.getElementById('numero-vendas-periodo').textContent = numeroVendas;
-    document.getElementById('ticket-medio-periodo').textContent = formatCurrency(ticketMedio);
-    document.getElementById('melhor-cliente-periodo').textContent = 
-        melhorCliente ? melhorCliente.nome : 'Nenhum';
+    const totalVendasPeriodoEl = document.getElementById('total-vendas-periodo');
+    const numeroVendasPeriodoEl = document.getElementById('numero-vendas-periodo');
+    const ticketMedioPeriodoEl = document.getElementById('ticket-medio-periodo');
+    const melhorClientePeriodoEl = document.getElementById('melhor-cliente-periodo');
+    
+    if (totalVendasPeriodoEl) totalVendasPeriodoEl.textContent = formatCurrency(totalVendas);
+    if (numeroVendasPeriodoEl) numeroVendasPeriodoEl.textContent = numeroVendas;
+    if (ticketMedioPeriodoEl) ticketMedioPeriodoEl.textContent = formatCurrency(ticketMedio);
+    if (melhorClientePeriodoEl) melhorClientePeriodoEl.textContent = melhorCliente ? melhorCliente.nome : 'Nenhum';
 }
 
 function renderVendasCharts() {
@@ -1256,7 +1659,6 @@ function renderVendasMesChart() {
         vendasMesChart.destroy();
     }
 
-    // Últimos 6 meses
     const currentDate = new Date();
     const months = [];
     const vendas6Meses = [];
@@ -1320,7 +1722,6 @@ function renderTopProdutosChart() {
         topProdutosChart.destroy();
     }
 
-    // Top 5 produtos por quantidade vendida
     const produtoVendas = {};
     vendas.forEach(venda => {
         venda.items.forEach(item => {
@@ -1391,6 +1792,7 @@ function renderTopProdutosChart() {
 
 function renderVendasRecentesTable(vendasPeriodo) {
     const container = document.getElementById('vendas-recentes-table');
+    if (!container) return;
     
     if (vendasPeriodo.length === 0) {
         container.innerHTML = '<div class="empty-state"><h3>Nenhuma venda no período</h3></div>';
@@ -1430,73 +1832,6 @@ function renderVendasRecentesTable(vendasPeriodo) {
     container.innerHTML = tableHTML;
 }
 
-// SISTEMA FINANCEIRO (métodos existentes)
-function renderTransactionsTable(tipo) {
-    const container = document.getElementById(`${tipo === 'receita' ? 'receitas' : 'despesas'}-table`);
-    const filteredTransactions = getFilteredTransactions(tipo);
-
-    if (filteredTransactions.length === 0) {
-        container.innerHTML = '<div class="empty-state"><h3>Nenhuma transação encontrada</h3></div>';
-        return;
-    }
-
-    const tableHTML = `
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Descrição</th>
-                    <th>Categoria</th>
-                    <th>Valor</th>
-                    <th>Vencimento</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${filteredTransactions.map(t => `
-                    <tr>
-                        <td>${t.descricao}</td>
-                        <td>${t.categoria}</td>
-                        <td>${formatCurrency(t.valor)}</td>
-                        <td>${formatDate(t.vencimento)}</td>
-                        <td><span class="status-badge ${t.status}">${t.status}</span></td>
-                        <td>
-                            <div class="transaction-actions">
-                                <button class="action-btn edit" onclick="editTransaction(${t.id})" title="Editar">✏️</button>
-                                <button class="action-btn delete" onclick="deleteTransaction(${t.id})" title="Excluir">🗑️</button>
-                                ${t.status === 'pendente' ? 
-                                    `<button class="action-btn pay" onclick="markAsPaid(${t.id})" title="Marcar como pago">✅</button>` : 
-                                    `<button class="action-btn" onclick="markAsPending(${t.id})" title="Marcar como pendente">⏳</button>`
-                                }
-                            </div>
-                        </td>
-                    </tr>
-                `).join('')}
-            </tbody>
-        </table>
-    `;
-
-    container.innerHTML = tableHTML;
-}
-
-function getFilteredTransactions(tipo) {
-    const sectionName = tipo === 'receita' ? 'receitas' : 'despesas';
-    const statusFilter = document.getElementById(`filter-status-${sectionName}`).value;
-    const categoryFilter = document.getElementById(`filter-categoria-${sectionName}`).value;
-
-    return transactions.filter(t => {
-        const matchesTipo = t.tipo === tipo;
-        const matchesStatus = statusFilter === 'todos' || t.status === statusFilter;
-        const matchesCategory = categoryFilter === 'todas' || t.categoria === categoryFilter;
-        
-        return matchesTipo && matchesStatus && matchesCategory;
-    });
-}
-
-function filterTransactions(tipo) {
-    renderTransactionsTable(tipo);
-}
-
 function updateReports() {
     const receitasPagas = transactions.filter(t => t.tipo === 'receita' && t.status === 'pago');
     const despesasPagas = transactions.filter(t => t.tipo === 'despesa' && t.status === 'pago');
@@ -1505,18 +1840,24 @@ function updateReports() {
     const totalDespesasPagas = despesasPagas.reduce((sum, t) => sum + t.valor, 0);
     const resultado = totalReceitasPagas - totalDespesasPagas;
 
-    document.getElementById('total-receitas-pagas').textContent = formatCurrency(totalReceitasPagas);
-    document.getElementById('total-despesas-pagas').textContent = formatCurrency(totalDespesasPagas);
-    document.getElementById('resultado-total').textContent = formatCurrency(resultado);
+    const totalReceitasPagasEl = document.getElementById('total-receitas-pagas');
+    const totalDespesasPagasEl = document.getElementById('total-despesas-pagas');
+    const resultadoTotalEl = document.getElementById('resultado-total');
 
-    const resultadoElement = document.getElementById('resultado-total');
-    resultadoElement.className = resultado >= 0 ? 'card-value receitas' : 'card-value despesas';
+    if (totalReceitasPagasEl) totalReceitasPagasEl.textContent = formatCurrency(totalReceitasPagas);
+    if (totalDespesasPagasEl) totalDespesasPagasEl.textContent = formatCurrency(totalDespesasPagas);
+    if (resultadoTotalEl) {
+        resultadoTotalEl.textContent = formatCurrency(resultado);
+        resultadoTotalEl.className = resultado >= 0 ? 'card-value receitas' : 'card-value despesas';
+    }
 
     renderCategorySummary();
 }
 
 function renderCategorySummary() {
     const container = document.getElementById('resumo-categorias');
+    if (!container) return;
+    
     const categoryTotals = {};
 
     transactions.filter(t => t.status === 'pago').forEach(t => {
@@ -1539,144 +1880,32 @@ function renderCategorySummary() {
     container.innerHTML = summaryHTML || '<div class="empty-state"><h3>Nenhum dado disponível</h3></div>';
 }
 
-// TRANSAÇÕES
-function openNewTransactionModal() {
-    currentEditingType = 'transaction';
-    currentEditingId = null;
-    document.getElementById('transaction-modal-title').textContent = 'Nova Transação';
-    document.getElementById('transaction-form').reset();
-    document.getElementById('transaction-date').value = new Date().toISOString().split('T')[0];
-    updateCategoriesSelect();
-    document.getElementById('transaction-modal').classList.remove('hidden');
-}
-
-function editTransaction(id) {
-    const transaction = transactions.find(t => t.id === id);
-    if (!transaction) return;
-
-    currentEditingType = 'transaction';
-    currentEditingId = id;
-    document.getElementById('transaction-modal-title').textContent = 'Editar Transação';
-    
-    document.getElementById('transaction-type').value = transaction.tipo;
-    document.getElementById('transaction-description').value = transaction.descricao;
-    document.getElementById('transaction-value').value = transaction.valor;
-    document.getElementById('transaction-date').value = transaction.vencimento;
-    document.getElementById('transaction-recurring').checked = transaction.recorrente;
-    document.getElementById('transaction-status').value = transaction.status;
-    
-    updateCategoriesSelect();
-    document.getElementById('transaction-category').value = transaction.categoria;
-    
-    document.getElementById('transaction-modal').classList.remove('hidden');
-}
-
-function deleteTransaction(id) {
-    if (confirm('Tem certeza que deseja excluir esta transação?')) {
-        transactions = transactions.filter(t => t.id !== id);
-        updateAllData();
-        showMessage('Transação excluída com sucesso!', 'success');
-    }
-}
-
-function markAsPaid(id) {
-    const transaction = transactions.find(t => t.id === id);
-    if (transaction) {
-        transaction.status = 'pago';
-        updateAllData();
-        showMessage('Transação marcada como paga!', 'success');
-    }
-}
-
-function markAsPending(id) {
-    const transaction = transactions.find(t => t.id === id);
-    if (transaction) {
-        transaction.status = 'pendente';
-        updateAllData();
-        showMessage('Transação marcada como pendente!', 'success');
-    }
-}
-
-function updateCategoriesSelect() {
-    const tipo = document.getElementById('transaction-type').value;
-    const categorySelect = document.getElementById('transaction-category');
-    
-    categorySelect.innerHTML = '';
-    categories[tipo].forEach(cat => {
-        categorySelect.innerHTML += `<option value="${cat}">${cat}</option>`;
-    });
-}
-
-function handleTransactionSubmit(e) {
-    e.preventDefault();
-
-    const formData = {
-        tipo: document.getElementById('transaction-type').value,
-        descricao: document.getElementById('transaction-description').value,
-        valor: parseFloat(document.getElementById('transaction-value').value),
-        categoria: document.getElementById('transaction-category').value,
-        vencimento: document.getElementById('transaction-date').value,
-        recorrente: document.getElementById('transaction-recurring').checked,
-        status: document.getElementById('transaction-status').value
-    };
-
-    if (currentEditingId) {
-        const transaction = transactions.find(t => t.id === currentEditingId);
-        Object.assign(transaction, formData);
-        showMessage('Transação atualizada com sucesso!', 'success');
-    } else {
-        const newTransaction = {
-            id: nextTransactionId++,
-            ...formData,
-            created: new Date().toISOString()
-        };
-        transactions.push(newTransaction);
-        showMessage('Transação criada com sucesso!', 'success');
-    }
-
-    closeModal('transaction');
-    updateAllData();
-}
-
-// MODAIS
+// --- MODAIS ---
 function closeModal(type) {
-    document.getElementById(`${type}-modal`).classList.add('hidden');
+    const modal = document.getElementById(`${type}-modal`);
+    if (modal) modal.classList.add('hidden');
     currentEditingId = null;
     currentEditingType = null;
 }
 
-// UTILITÁRIOS
 function updateAllData() {
     const activeSection = document.querySelector('.section.active');
     if (activeSection) {
-        const sectionId = activeSection.id;
-        showSection(sectionId);
+        showSection(activeSection.id);
     }
 }
 
-function formatCurrency(value) {
-    return 'R$ ' + value.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-}
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR');
-}
-
-function formatDateTime(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR') + ' ' + date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
-}
-
-function showMessage(text, type) {
-    const message = document.createElement('div');
-    message.className = `message ${type}`;
-    message.textContent = text;
-    
-    const mainContent = document.querySelector('.main-content');
-    mainContent.insertBefore(message, mainContent.firstChild);
-    
-    setTimeout(() => {
-        message.remove();
-    }, 3000);
-}
+// --- FUNÇÕES GLOBAIS PARA ONCLICK ---
+window.editTransaction = editTransaction;
+window.deleteTransaction = deleteTransaction;
+window.markAsPaid = markAsPaid;
+window.markAsPending = markAsPending;
+window.editCliente = editCliente;
+window.deleteCliente = deleteCliente;
+window.viewClienteHistory = viewClienteHistory;
+window.editProduto = editProduto;
+window.deleteProduto = deleteProduto;
+window.addToCart = addToCart;
+window.changeQuantity = changeQuantity;
+window.setQuantity = setQuantity;
+window.removeFromCart = removeFromCart;

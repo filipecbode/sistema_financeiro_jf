@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contas a Pagar - GestãoPro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🚀 GestãoPro</h2>
+                <div class="user-info">Sistema de Gestão</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">FINANCEIRO</h4>
+                    <a href="index.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a href="contas-receber.html" class="nav-item">
+                        <span class="nav-icon">💰</span>
+                        Contas a Receber
+                    </a>
+                    <a href="contas-pagar.html" class="nav-item active">
+                        <span class="nav-icon">💸</span>
+                        Contas a Pagar
+                    </a>
+                    <a href="relatorios-financeiros.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        Relatórios Financeiros
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">GESTÃO</h4>
+                    <a href="fornecedores.html" class="nav-item">
+                        <span class="nav-icon">🏢</span>
+                        Fornecedores
+                    </a>
+                    <a href="clientes.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        Clientes
+                    </a>
+                    <a href="produtos.html" class="nav-item">
+                        <span class="nav-icon">📦</span>
+                        Produtos
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">VENDAS</h4>
+                    <a href="vendas.html" class="nav-item">
+                        <span class="nav-icon">🛒</span>
+                        PDV - Vendas
+                    </a>
+                    <a href="relatorios-vendas.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        Relatórios de Vendas
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="section-header">
+                <h1>💸 Contas a Pagar</h1>
+                <button class="btn btn--primary" onclick="openTransactionModal('despesa')">
+                    + Nova Conta a Pagar
+                </button>
+            </header>
+
+            <!-- Resumo rápido -->
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="summary-icon">💳</div>
+                    <div class="summary-info">
+                        <h3>Total Pendente</h3>
+                        <p class="summary-value negative">R$ 14.329,00</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">⏰</div>
+                    <div class="summary-info">
+                        <h3>Vencendo Hoje</h3>
+                        <p class="summary-value warning">2 contas</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon">📊</div>
+                    <div class="summary-info">
+                        <h3>Total de Contas</h3>
+                        <p class="summary-value">23 contas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros COM FILTROS POR DATA FUNCIONANDO -->
+            <div class="filters-container">
+                <div class="filters-header">
+                    <h3>🔍 Filtros</h3>
+                    <button class="btn btn--secondary btn--sm" onclick="clearFilters('despesas')">
+                        Limpar Filtros
+                    </button>
+                </div>
+                <div class="filters">
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="filter-status-despesas" class="form-control" onchange="renderTransactions('despesa')">
+                            <option value="">Todos os Status</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Categoria</label>
+                        <select id="filter-categoria-despesas" class="form-control" onchange="renderTransactions('despesa')">
+                            <option value="">Todas as Categorias</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Data De</label>
+                        <input type="date" id="filter-data-inicio-despesas" class="form-control" onchange="renderTransactions('despesa')">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Data Até</label>
+                        <input type="date" id="filter-data-fim-despesas" class="form-control" onchange="renderTransactions('despesa')">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de transações -->
+            <div class="transactions-container">
+                <div id="lista-despesas" class="transactions-list">
+                    <!-- Preenchido pelo JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Transação -->
+    <div id="transaction-modal" class="modal hidden">
+        <div class="modal-overlay" onclick="closeModal('transaction-modal')"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="transaction-modal-title">Nova Conta a Pagar</h3>
+                <button class="modal-close" onclick="closeModal('transaction-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="transaction-form" onsubmit="saveTransaction(event)">
+                    <div class="form-group">
+                        <label class="form-label">Descrição</label>
+                        <input type="text" id="transaction-descricao" class="form-control" required placeholder="Ex: Conta de luz">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Valor (R$)</label>
+                        <input type="number" id="transaction-valor" class="form-control" step="0.01" min="0" required placeholder="0,00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Categoria</label>
+                        <select id="transaction-categoria" class="form-control" required>
+                            <option value="">Selecione uma categoria</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Fornecedor</label>
+                        <select id="transaction-fornecedor" class="form-control">
+                            <option value="">Selecione um fornecedor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Data de Vencimento</label>
+                        <input type="date" id="transaction-vencimento" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="transaction-recorrente" onchange="toggleParcelasRestantes()">
+                            Conta recorrente (mensal)
+                        </label>
+                    </div>
+                    <div class="form-group" id="parcelas-group" style="display: none;">
+                        <label class="form-label">Parcelas Restantes</label>
+                        <input type="number" id="transaction-parcelas" class="form-control" min="1" placeholder="Ex: 5">
+                        <small class="form-help">Deixe vazio para parcelas infinitas</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select id="transaction-status" class="form-control" required>
+                            <option value="pendente">Pendente</option>
+                            <option value="pago">Pago</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn--secondary" onclick="closeModal('transaction-modal')">
+                    Cancelar
+                </button>
+                <button type="submit" form="transaction-form" class="btn btn--primary">
+                    Salvar Conta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Inicialização da página - SEM VERIFICAÇÃO DE LOGIN
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Página Contas a Pagar carregada!');
+            
+            // Inicializar dados
+            populateFilters();
+            renderTransactions('despesa');
+            
+            // Definir data padrão no modal para hoje
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('transaction-vencimento').value = today;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GestãoPro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>🚀 GestãoPro</h2>
+                <div class="user-info">Sistema de Gestão</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">FINANCEIRO</h4>
+                    <a href="index.html" class="nav-item active">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                    <a href="contas-receber.html" class="nav-item">
+                        <span class="nav-icon">💰</span>
+                        Contas a Receber
+                    </a>
+                    <a href="contas-pagar.html" class="nav-item">
+                        <span class="nav-icon">💸</span>
+                        Contas a Pagar
+                    </a>
+                    <a href="relatorios-financeiros.html" class="nav-item">
+                        <span class="nav-icon">📈</span>
+                        Relatórios Financeiros
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">GESTÃO</h4>
+                    <a href="fornecedores.html" class="nav-item">
+                        <span class="nav-icon">🏢</span>
+                        Fornecedores
+                    </a>
+                    <a href="clientes.html" class="nav-item">
+                        <span class="nav-icon">👥</span>
+                        Clientes
+                    </a>
+                    <a href="produtos.html" class="nav-item">
+                        <span class="nav-icon">📦</span>
+                        Produtos
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">VENDAS</h4>
+                    <a href="vendas.html" class="nav-item">
+                        <span class="nav-icon">🛒</span>
+                        PDV - Vendas
+                    </a>
+                    <a href="relatorios-vendas.html" class="nav-item">
+                        <span class="nav-icon">📊</span>
+                        Relatórios de Vendas
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="section-header">
+                <h1>Dashboard Financeiro</h1>
+                <div class="welcome-info">
+                    <p>Seja bem-vindo ao seu sistema de gestão! 🎉</p>
+                </div>
+            </header>
+
+            <!-- Cards informativos -->
+            <div class="cards-grid">
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Saldo Atual</h3>
+                        <p class="card-value" id="saldo-atual">R$ -14.329,00</p>
+                        <p class="card-subtitle">balanço mensal</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Receitas do Mês</h3>
+                        <p class="card-value positive" id="receitas-mes">R$ 0,00</p>
+                        <p class="card-subtitle">valor recebido</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Despesas do Mês</h3>
+                        <p class="card-value negative" id="despesas-mes">R$ 14.329,00</p>
+                        <p class="card-subtitle">contas pendentes</p>
+                    </div>
+                </div>
+                <div class="card info-card">
+                    <div class="card__body">
+                        <h3>Total de Contas</h3>
+                        <p class="card-value warning" id="total-contas">23</p>
+                        <p class="card-subtitle">contas cadastradas</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resumo por categoria -->
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>💳 Cartões de Crédito</h3>
+                        <p class="card-value negative">R$ 7.500,00</p>
+                        <p class="card-subtitle">em faturas pendentes</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <h3>🏠 Moradia + Serviços</h3>
+                        <p class="card-value">R$ 2.234,00</p>
+                        <p class="card-subtitle">custos fixos mensais</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <h3>🏢 Fornecedores</h3>
+                        <p class="card-value">17</p>
+                        <p class="card-subtitle">fornecedores cadastrados</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card__body">
+                        <h3>⏰ Vencendo Hoje</h3>
+                        <p class="card-value warning">2</p>
+                        <p class="card-subtitle">contas de hoje</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contas vencendo -->
+            <div class="card">
+                <div class="card__body">
+                    <h3>📅 Contas Vencendo nos Próximos 7 Dias</h3>
+                    <div id="contas-vencendo" class="upcoming-bills">
+                        <div class="upcoming-bill">
+                            <div class="bill-info">
+                                <strong>Conta de luz</strong>
+                                <span class="bill-meta">🏢 Companhia Elétrica | 📅 03/10/2025</span>
+                            </div>
+                            <div class="bill-amount">R$ 270,00</div>
+                        </div>
+                        <div class="upcoming-bill">
+                            <div class="bill-info">
+                                <strong>Conta de Gás</strong>
+                                <span class="bill-meta">🏢 Companhia de Gás | 📅 03/10/2025</span>
+                            </div>
+                            <div class="bill-amount">R$ 24,00</div>
+                        </div>
+                        <div class="upcoming-bill">
+                            <div class="bill-info">
+                                <strong>NET - Jose Carlos</strong>
+                                <span class="bill-meta">🏢 NET - Jose Carlos | 📅 05/10/2025</span>
+                            </div>
+                            <div class="bill-amount">R$ 100,00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações Rápidas -->
+            <div class="quick-actions">
+                <div class="card">
+                    <div class="card__body">
+                        <h3>🚀 Acesso Rápido</h3>
+                        <div class="actions-grid">
+                            <a href="contas-pagar.html" class="action-btn">
+                                <span class="action-icon">💸</span>
+                                <span class="action-text">Contas a Pagar</span>
+                                <small>23 pendentes</small>
+                            </a>
+                            <a href="contas-receber.html" class="action-btn">
+                                <span class="action-icon">💰</span>
+                                <span class="action-text">Contas a Receber</span>
+                                <small>Gerenciar receitas</small>
+                            </a>
+                            <a href="fornecedores.html" class="action-btn">
+                                <span class="action-icon">🏢</span>
+                                <span class="action-text">Fornecedores</span>
+                                <small>17 cadastrados</small>
+                            </a>
+                            <a href="vendas.html" class="action-btn">
+                                <span class="action-icon">🛒</span>
+                                <span class="action-text">Nova Venda</span>
+                                <small>PDV Sistema</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Sistema inicializa automaticamente - SEM LOGIN
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ GestãoPro carregado com sucesso!');
+            console.log('📊 23 contas a pagar carregadas');
+            console.log('🏢 17 fornecedores carregados');
+            
+            // Atualizar dados do dashboard
+            updateDashboardData();
+        });
+
+        function updateDashboardData() {
+            // Calcular totais
+            const totalDespesas = transactions
+                .filter(t => t.tipo === 'despesa' && t.status === 'pendente')
+                .reduce((sum, t) => sum + t.valor, 0);
+            
+            const totalReceitas = transactions
+                .filter(t => t.tipo === 'receita' && t.status === 'pago')
+                .reduce((sum, t) => sum + t.valor, 0);
+            
+            const saldo = totalReceitas - totalDespesas;
+
+            // Atualizar elementos na tela
+            const despesasElement = document.getElementById('despesas-mes');
+            if (despesasElement) {
+                despesasElement.textContent = formatCurrency(totalDespesas);
+            }
+
+            const receitasElement = document.getElementById('receitas-mes');
+            if (receitasElement) {
+                receitasElement.textContent = formatCurrency(totalReceitas);
+            }
+
+            const saldoElement = document.getElementById('saldo-atual');
+            if (saldoElement) {
+                saldoElement.textContent = formatCurrency(saldo);
+                saldoElement.className = `card-value ${saldo >= 0 ? 'positive' : 'negative'}`;
+            }
+
+            const totalContasElement = document.getElementById('total-contas');
+            if (totalContasElement) {
+                totalContasElement.textContent = transactions.length;
+            }
+        }
+    </script>
+</body>
+</html>
